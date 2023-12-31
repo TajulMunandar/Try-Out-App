@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('soal_details', function (Blueprint $table) {
             $table->id();
-            $table->string('NIM');
-            $table->string('password')->unique();
-            $table->boolean('is_admin');
+            $table->string('name');
+            $table->foreignId('soal_id')->constrained('soals')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('soal_details');
     }
 };

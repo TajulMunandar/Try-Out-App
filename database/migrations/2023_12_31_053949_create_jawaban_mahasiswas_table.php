@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('jawaban_mahasiswas', function (Blueprint $table) {
             $table->id();
-            $table->string('NIM');
-            $table->string('password')->unique();
-            $table->boolean('is_admin');
+            $table->foreignId('soal_detail_id')->constrained('soal_details')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('jawaban_mahasiswas');
     }
 };

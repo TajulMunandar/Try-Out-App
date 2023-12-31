@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('paket_details', function (Blueprint $table) {
             $table->id();
-            $table->string('NIM');
-            $table->string('password')->unique();
-            $table->boolean('is_admin');
+            $table->string('name');
+            $table->foreignId('paket_id')->constrained('pakets')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('prodi_id')->constrained('prodis')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('paket_details');
     }
 };
