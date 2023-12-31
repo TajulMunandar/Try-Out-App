@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('kelas');
-            $table->string('NIM');
+            $table->string('nim')->unique();
             $table->foreignId('prodi_id')->constrained('prodis')->onUpdate('cascade')->onDelete('restrict');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
