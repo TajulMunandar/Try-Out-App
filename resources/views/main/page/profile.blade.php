@@ -31,13 +31,13 @@
                                     <a type="button" class="position-relative" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">
                                         <div>
-                                            @if (auth()->user()->image)
+                                            {{-- @if (auth()->user()->image)
                                                 <img src="{{ asset('storage/' . auth()->user()->image) }}" alt=""
                                                     width="25%" class="rounded-circle mb-3 ">
                                             @else
                                                 <img src="{{ asset('images/avatar.png') }}" alt="" width="25%"
                                                     class="rounded-circle mb-3 ">
-                                            @endif
+                                            @endif --}}
                                             <span
                                                 class="position-absolute start-60 translate-middle badge rounded-pill bg-secondary"
                                                 style="top: 75%;">

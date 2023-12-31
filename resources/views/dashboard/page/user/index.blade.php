@@ -45,9 +45,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>Username</th>
-                                <th>Prodi</th>
+                                <th>NIM</th>
                                 <th>Role</th>
                                 <th>Action</th>
                             </tr>
@@ -56,15 +54,11 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->username }}</td>
-                                    <td>{{ $user->prodis->name }}</td>
+                                    <td>{{ $user->nim }}</td>
                                     <td>
-                                        @if ($user->role == 0)
+                                        @if ($user->is_admin == 0)
                                             Mahasiswa
-                                        @elseif ($user->role == 1)
-                                            Dosen
-                                        @elseif ($user->role == 2)
+                                        @elseif ($user->is_admin == 1)
                                             Admin
                                         @endif
                                     </td>
@@ -173,48 +167,26 @@
                                                         <div class="mb-3">
                                                             <input type="hidden" name="id"
                                                                 value="{{ $user->id }}">
-                                                            <label for="name" class="form-label">Nama</label>
+                                                            <label for="nim" class="form-label">NIM</label>
                                                             <input type="text"
-                                                                class="form-control @error('name') is-invalid @enderror"
-                                                                name="name" value="{{ old('name', $user->name) }}"
-                                                                id="name" placeholder="Anton" autofocus required>
-                                                            @error('name')
+                                                                class="form-control @error('nim') is-invalid @enderror"
+                                                                name="nim" value="{{ old('nim', $user->nim) }}"
+                                                                id="nim" placeholder="12345..." autofocus required>
+                                                            @error('nim')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="username" class="form-label">Username</label>
-                                                            <input type="text"
-                                                                class="form-control @error('username') is-invalid @enderror"
-                                                                name="username" id="username"
-                                                                value="{{ old('username', $user->username) }}"
-                                                                placeholder="anto_23" required>
-                                                            @error('username')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="prodiId" class="form-label">Prodi</label>
-                                                            <select class="form-select" name="prodiId" id="prodiId">
-                                                                @foreach ($prodis as $prodi)
-                                                                    @if (old('prodiId', $user->prodiId) == $prodi->id)
-                                                                        <option value="{{ $prodi->id }}" selected>{{ $prodi->name }}</option>
-                                                                    @else
-                                                                        <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="role" class="form-label">Role</label>
-                                                            <select class="form-select" name="role" id="role">
-                                                                <option value="0" {{ old('role', $user->role) == 0 ? 'selected' : '' }}>Mahasiswa</option>
-                                                                <option value="1" {{ old('role', $user->role) == 1 ? 'selected' : '' }}>Dosen</option>
-                                                                <option value="2" {{ old('role', $user->role) == 2 ? 'selected' : '' }}>Admin</option>
+                                                            <label for="is_admin" class="form-label">Role</label>
+                                                            <select class="form-select" name="is_admin" id="is_admin">
+                                                                <option value="0"
+                                                                    {{ old('is_admin', $user->is_admin) == 0 ? 'selected' : '' }}>
+                                                                    Mahasiswa</option>
+                                                                <option value="1"
+                                                                    {{ old('is_admin', $user->is_admin) == 1 ? 'selected' : '' }}>
+                                                                    Admin</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -222,7 +194,8 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-warning text-white">Perbarui</button>
+                                                    <button type="submit"
+                                                        class="btn btn-warning text-white">Perbarui</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -247,7 +220,8 @@
                                                 <div class="modal-body">
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="id" value="{{ $user->id }}">
-                                                    <p class="fs-5">Apakah anda yakin akan menghapus data <b>{{ $user->username }} ?</b></p>
+                                                    <p class="fs-5">Apakah anda yakin akan menghapus data dengan NIM
+                                                        <b>{{ $user->nim }} ?</b></p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -281,25 +255,15 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nama</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" id="name" placeholder="Name" autofocus required>
-                                @error('name')
+                                <label for="nim" class="form-label">NIM</label>
+                                <input type="text" class="form-control @error('nim') is-invalid @enderror"
+                                    name="nim" id="nim" placeholder="nim" autofocus required>
+                                @error('nim')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                    name="username" id="username" placeholder="anto_23" required>
-                                @error('username')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
+                                </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div id="pwd" class="input-group">
@@ -316,23 +280,10 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="prodiId" class="form-label">Prodi</label>
-                                <select class="form-select" name="prodiId" id="prodiId">
-                                    @foreach ($prodis as $prodi)
-                                        @if (old('prodiId') == $prodi->id)
-                                            <option value="{{ $prodi->id }}" selected>{{ $prodi->name }}</option>
-                                        @else
-                                            <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-select" name="role" id="role">
+                                <label for="is_admin" class="form-label">Role</label>
+                                <select class="form-select" name="is_admin" id="is_admin">
                                     <option value="0" selected>Mahasiswa</option>
-                                    <option value="1" selected>Dosen</option>
-                                    <option value="2" selected>Admin</option>
+                                    <option value="1" selected>Admin</option>
                                 </select>
                             </div>
                         </div>

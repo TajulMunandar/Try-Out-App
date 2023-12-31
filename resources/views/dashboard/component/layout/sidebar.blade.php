@@ -52,24 +52,24 @@
 
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/materi') }}"
-                    href="">
+                <a class="nav-link {{ Request::is('dashboard/mahasiswa') ? 'active' : '' }}"
+                    href="{{ route('mahasiswa.index') }}">
                     <i class="fa-solid fa-screen-users me-3 nav-icon"></i>
                     Mahasiswa
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/materi') }}"
-                    href="">
+                <a class="nav-link {{ Request::is('dashboard/prodi') ? 'active' : '' }}"
+                    href="{{ route('prodi.index') }}">
                     <i class="fa-solid fa-buildings me-3 nav-icon"></i>
                     Prodi
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/materi') }}"
-                    href="">
+                <a class="nav-link {{ Request::is('dashboard/user') ? 'active' : '' }}"
+                    href="{{ route('user.index') }}">
                     <i class="fa-solid fa-user me-4 nav-icon"></i>
                     User
                 </a>
