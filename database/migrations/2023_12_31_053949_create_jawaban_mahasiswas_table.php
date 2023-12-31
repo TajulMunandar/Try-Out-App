@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('jawaban_mahasiswas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('jawaban_id')->constrained('jawabans')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('jawaban_id');
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('mahasiswa_id');
             $table->timestamps();
         });
     }

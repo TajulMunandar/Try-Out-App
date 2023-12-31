@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('soal_id')->constrained('soals')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('soal_id');
             $table->timestamps();
         });
     }

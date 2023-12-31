@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('paket_id')->constrained('pakets')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('paket_id');
             $table->foreignId('prodi_id')->constrained('prodis')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('prodi_id');
             $table->timestamps();
         });
     }
