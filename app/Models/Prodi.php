@@ -9,6 +9,10 @@ class Prodi extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id'
+    ];
+
     public function mahasiswas()
     {
         return $this->hasMany(Mahasiswa::class, 'prodi_id', 'id');

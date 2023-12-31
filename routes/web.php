@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'index')->name('login')->middleware('guest');
+    Route::post('/login', 'authenticate');
+    Route::post('/logout', 'logout');
+});
+
+Route::prefix('/dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::resource('/prodi', DashboardProdiController::class)->middleware('dosmin');
 });

@@ -9,6 +9,10 @@ class Jawaban extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id'
+    ];
+
     public function soal_details()
     {
         return $this->belongsTo(SoalDetail::class, 'soal_detail_id', 'id');

@@ -9,6 +9,10 @@ class PaketDetail extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id'
+    ];
+
     public function pakets()
     {
         return $this->belongsTo(Paket::class, 'paket_id', 'id');

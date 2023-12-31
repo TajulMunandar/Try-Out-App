@@ -9,6 +9,10 @@ class PaketSoal extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id'
+    ];
+
     public function soals()
     {
         return $this->belongsTo(Soal::class, 'soal_id', 'id');

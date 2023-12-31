@@ -9,6 +9,10 @@ class Soal extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id'
+    ];
+
     public function soal_details()
     {
         return $this->hasMany(SoalDetail::class, 'soal_id', 'id');
