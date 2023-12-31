@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('paket_soals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('soal_id')->constrained('soals')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('soal_id');
             $table->foreignId('paket_detail_id')->constrained('paket_details')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('paket_detail_id');
             $table->timestamps();
         });
     }

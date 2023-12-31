@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('jawabans', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->boolean('true_false');
             $table->foreignId('soal_detail_id')->constrained('soal_details')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('soal_detail_id');
             $table->timestamps();
         });
     }
