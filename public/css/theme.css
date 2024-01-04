@@ -318,7 +318,7 @@ body {
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
-  background-color: #F8FAE5;
+  background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -326,9 +326,9 @@ body {
 hr {
   margin: 1rem 0;
   color: inherit;
-  background-color: #B19470;
+  background-color: currentColor;
   border: 0;
-  opacity: 0.55;
+  opacity: 0.25;
 }
 
 hr:not([size]) {
@@ -6027,7 +6027,7 @@ textarea.form-control-lg {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
-  color: #DDE6ED;
+  color: #64CCC5;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -6036,10 +6036,10 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #9DB2BF;
+  color: #64CCC5;
 }
 .nav-link.disabled {
-  color: #637381;
+  color: #64CCC5;
   pointer-events: none;
   cursor: default;
 }
@@ -6065,7 +6065,7 @@ textarea.form-control-lg {
 }
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #9DB2BF;
+  color: #64CCC5;
   background-color: #fff;
   border-color: #DFE3E8 #DFE3E8 #fff;
 }
@@ -6082,7 +6082,7 @@ textarea.form-control-lg {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #DDE6ED;
+  color: #fff;
   background-color: #0FA39B;
 }
 
@@ -25978,7 +25978,7 @@ textarea.form-control-lg {
   width: 100%;
   max-width: 250px;
   padding: 0rem;
-  background-color: #43766C;
+  background-color: #27374D;
   border-right: 1px solid var(--bs-dark);
   transition: margin 0.25s ease-out;
 }
@@ -26021,17 +26021,17 @@ textarea.form-control-lg {
   transition: all 0.5s;
 }
 .navbar-vertical .navbar-nav .nav-item .nav-link:hover {
-  color: #F8FAE5;
+  color: #64CCC5;
 }
 .navbar-vertical .navbar-nav .nav-item .nav-link:hover .nav-icon {
-  color: #F8FAE5;
+  color: #64CCC5;
   opacity: 1;
 }
 .navbar-vertical .navbar-nav .nav-item .nav-link.active {
-  color: #F8FAE5;
+  color: #64CCC5;
 }
 .navbar-vertical .navbar-nav .nav-item .nav-link.active .nav-icon {
-  color: #F8FAE5;
+  color: #64CCC5;
   opacity: 1;
 }
 .navbar-vertical .navbar-nav .nav-item .nav-link[data-bs-toggle=collapse] {
@@ -26064,10 +26064,10 @@ textarea.form-control-lg {
   padding: 0.25rem 3rem;
 }
 .navbar-vertical .navbar-nav .nav .nav-item .nav-link:hover {
-  color: var(--bs-danger);
+  color: #64CCC5;
 }
 .navbar-vertical .navbar-nav .nav .nav-item .nav-link.active {
-  color: var(--bs-danger);
+  color: #64CCC5;
 }
 .navbar-vertical .navbar-nav .nav .nav-item .nav .nav-item .nav-link {
   color: #FFF;

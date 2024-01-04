@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardMahasiswaController;
+use App\Http\Controllers\DashboardPaketController;
 use App\Http\Controllers\DashboardProdiController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\LoginController;
@@ -19,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 Route::controller(LoginController::class)->group(function () {
@@ -29,10 +31,13 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout');
 });
 
-Route::prefix('/dashboard')->group(function () {
+Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/user', DashboardUserController::class)->middleware('auth');
-    Route::post('/user/reset-password', [DashboardUserController::class, 'resetPasswordAdmin'])->name('user.reset')->middleware('auth');
-    Route::resource('/prodi', DashboardProdiController::class)->middleware('auth');
-    Route::resource('/mahasiswa', DashboardMahasiswaController::class)->middleware('auth');
+    Route::resource('/user', DashboardUserController::class);
+    Route::post('/user/reset-password', [DashboardUserController::class, 'resetPasswordAdmin'])->name('user.reset');
+    Route::resource('/prodi', DashboardProdiController::class);
+    Route::resource('/mahasiswa', DashboardMahasiswaController::class);
+    Route::prefix('/paket-soal')->group(function () {
+        Route::resource('/paket', DashboardPaketController::class);
+    });
 });

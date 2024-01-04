@@ -1,8 +1,8 @@
 <nav class="navbar-vertical navbar">
     <div class="nav-scroller flex-column d-flex justify-content-between">
         <!-- Brand logo -->
-        <a class="navbar-brand text-center fw-bold" href="/dashboard" style="color: #DDE6ED">
-            <img src="{{ asset('images/logo.png') }}" alt="" style="background-color: #F8FAE5" height="110%">
+        <a class="navbar-brand text-center fw-bold" href="/dashboard" style="color: #DDE6ED"><img
+                src="{{ asset('images/logo.png') }}" alt="" style="background-color: #DDE6ED">
         </a>
 
         <!-- Navbar nav -->
@@ -16,40 +16,42 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/materi') }}"
-                    href="">
-                    <i class="fa-solid fa-box me-4 nav-icon"></i>
-                    Paket
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link has-arrow {{ Request::is('dashboard/quizz*') ? 'active' : '' }}" href="#!"
+                <a class="nav-link has-arrow {{ Request::is('dashboard/paket-soal*') ? 'active' : '' }}" href="#!"
                     data-bs-toggle="collapse" data-bs-target="#navQuizz" aria-expanded="false" aria-controls="navQuizz">
-                    <i class="fa-solid fa-briefcase me-3 nav-icon"></i>
-                    Quizz
+                    <i class="fa-solid fa-box me-3 nav-icon"></i>
+                    Paket-Soal
                 </a>
-                <div id="navQuizz" class="collapse {{ Request::is('dashboard/quizz*') ? 'show' : '' }}"
+                <div id="navQuizz" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
                     data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::is('dashboard/quizz/choice*') || Request::query('isChoice') == 'true' ? 'active' : '' }}"
-                                href="">
-                                Choice
+                            <a class="nav-link {{ Request::is('dashboard/paket-soal/soal*') ? 'active' : '' }}"
+                                href="#">
+                                Soal
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::is('dashboard/quizz/essay*') || Request::query('isChoice') == 'false' ? 'active' : '' }}"
-                                href="">
-                                Essay
+                            <a class="nav-link {{ Request::is('dashboard/paket-soal/paket*') ? 'active' : '' }}"
+                                href="{{ route('paket.index') }}">
+                                Paket
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="#">
+                    <i class="fa-solid fa-hundred-points me-3 nav-icon"></i>
+                    Penilaian
+                </a>
+            </li>
+
             <hr class="mx-3">
 
+            <li class="nav-item ">
+                <p class="nav-link mb-0 fw-bold">DATA MASTER</p>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('dashboard/mahasiswa') ? 'active' : '' }}"
@@ -80,7 +82,7 @@
         <div class="nav-item mt-auto mb-5">
             <form action="/logout" method="post" class="d-grid">
                 @csrf
-                <button class="btn btn-danger d-block mx-4">
+                <button class="btn btn-outline-secondary d-block mx-4" style="color: #64CCC5">
                     <i class="fa-solid fa-arrow-right-from-bracket me-2 nav-icon"></i>
                     Keluar
                 </button>
