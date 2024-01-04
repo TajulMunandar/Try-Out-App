@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Paket;
 use App\Models\PaketDetail;
-use App\Models\Prodi;
 use Illuminate\Http\Request;
 
-class DashboardPaketController extends Controller
+class DashboardPaketDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.page.paket-soal.paket.index', [
-            'pakets' => Paket::latest()->get(),
-        ]);
+        //
     }
 
     /**
@@ -24,7 +20,7 @@ class DashboardPaketController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -33,12 +29,14 @@ class DashboardPaketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'paket_id' => 'required',
+            'prodi_id' => 'required'
         ]); 
 
-        Paket::create($validatedData);
+        PaketDetail::create($validatedData);
 
-        return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil dibuat');
+        return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('success', 'Paket Detail berhasil dibuat');
     }
 
     /**
@@ -46,11 +44,7 @@ class DashboardPaketController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.page.paket-soal.paket.paket-detail.index', [
-            'paket_details' => PaketDetail::with('prodis')->where('paket_id', $id)->latest()->get(),
-            'prodis' => Prodi::latest()->get(),
-            'paket_id' => $id
-        ]);
+        
     }
 
     /**
@@ -68,12 +62,13 @@ class DashboardPaketController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
+            'prodi_id' => 'required'
         ];
 
         $validatedData = $request->validate($rules);
  
-        Paket::where('id', $id)->update($validatedData);
-        return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil diubah');
+        PaketDetail::where('id', $id)->update($validatedData);
+        return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('success', 'Paket berhasil diubah');
     }
 
     /**
@@ -82,11 +77,11 @@ class DashboardPaketController extends Controller
     public function destroy(string $id)
     {
         try{
-            $paket = Paket::whereId($id)->first();
-            Paket::destroy($id);
-            return redirect('/dashboard/paket-soal/paket')->with('success', "Paket $paket->name berhasil dihapus!");
+            $paket_detail = PaketDetail::whereId($id)->first();
+            PaketDetail::destroy($id);
+            return redirect("/dashboard/paket-soal/paket/{$paket_detail->paket_id}")->with('success', "Paket $paket_detail->name berhasil dihapus!");
         }catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/dashboard/paket-soal/paket')->with('failed', "Paket $paket->name tidak bisa dihapus karena sedang digunakan!");
+            return redirect("/dashboard/paket-soal/paket/{$paket_detail->paket_id}")->with('failed', "Paket $paket_detail->name tidak bisa dihapus karena sedang digunakan!");
         }
     }
 }

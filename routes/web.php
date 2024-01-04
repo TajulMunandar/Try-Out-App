@@ -3,7 +3,10 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardMahasiswaController;
 use App\Http\Controllers\DashboardPaketController;
+use App\Http\Controllers\DashboardPaketDetailController;
 use App\Http\Controllers\DashboardProdiController;
+use App\Http\Controllers\DashboardSoalController;
+use App\Http\Controllers\DashboardSoalDetailController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\LoginController;
 use GuzzleHttp\Middleware;
@@ -39,5 +42,9 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::resource('/mahasiswa', DashboardMahasiswaController::class);
     Route::prefix('/paket-soal')->group(function () {
         Route::resource('/paket', DashboardPaketController::class);
+        Route::resource('/paket/paket-detail', DashboardPaketDetailController::class)->names('paket-detail');
+        Route::resource('/soal', DashboardSoalController::class);
+        Route::resource('/soal/soal-detail', DashboardSoalDetailController::class)->names('soal-detail');
     });
+    
 });

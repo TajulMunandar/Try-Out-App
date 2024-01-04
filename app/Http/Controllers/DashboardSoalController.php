@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Paket;
-use App\Models\PaketDetail;
-use App\Models\Prodi;
+use App\Models\Soal;
+use App\Models\SoalDetail;
 use Illuminate\Http\Request;
 
-class DashboardPaketController extends Controller
+class DashboardSoalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.page.paket-soal.paket.index', [
-            'pakets' => Paket::latest()->get(),
+        return view('dashboard.page.paket-soal.soal.index', [
+            'soals' => Soal::latest()->get(),
         ]);
     }
 
@@ -36,9 +35,9 @@ class DashboardPaketController extends Controller
             'name' => 'required|max:255'
         ]); 
 
-        Paket::create($validatedData);
+        Soal::create($validatedData);
 
-        return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil dibuat');
+        return redirect('/dashboard/paket-soal/soal')->with('success', 'Soal berhasil dibuat');
     }
 
     /**
@@ -46,10 +45,9 @@ class DashboardPaketController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.page.paket-soal.paket.paket-detail.index', [
-            'paket_details' => PaketDetail::with('prodis')->where('paket_id', $id)->latest()->get(),
-            'prodis' => Prodi::latest()->get(),
-            'paket_id' => $id
+        return view('dashboard.page.paket-soal.soal.soal-detail.index', [
+            'soal_details' => SoalDetail::with('soals')->where('soal_id', $id)->latest()->get(),
+            'soal_id' => $id
         ]);
     }
 
@@ -72,8 +70,8 @@ class DashboardPaketController extends Controller
 
         $validatedData = $request->validate($rules);
  
-        Paket::where('id', $id)->update($validatedData);
-        return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil diubah');
+        Soal::where('id', $id)->update($validatedData);
+        return redirect('/dashboard/paket-soal/soal')->with('success', 'Soal berhasil diubah');
     }
 
     /**
@@ -82,11 +80,11 @@ class DashboardPaketController extends Controller
     public function destroy(string $id)
     {
         try{
-            $paket = Paket::whereId($id)->first();
-            Paket::destroy($id);
-            return redirect('/dashboard/paket-soal/paket')->with('success', "Paket $paket->name berhasil dihapus!");
+            $soal = Soal::whereId($id)->first();
+            Soal::destroy($id);
+            return redirect('/dashboard/paket-soal/soal')->with('success', "Soal $soal->name berhasil dihapus!");
         }catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/dashboard/paket-soal/paket')->with('failed', "Paket $paket->name tidak bisa dihapus karena sedang digunakan!");
+            return redirect('/dashboard/paket-soal/soal')->with('failed', "Soal $soal->name tidak bisa dihapus karena sedang digunakan!");
         }
     }
 }

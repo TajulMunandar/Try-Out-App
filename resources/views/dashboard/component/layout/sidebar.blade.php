@@ -26,7 +26,7 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('dashboard/paket-soal/soal*') ? 'active' : '' }}"
-                                href="#">
+                                href="{{ route('soal.index') }}">
                                 Soal
                             </a>
                         </li>
