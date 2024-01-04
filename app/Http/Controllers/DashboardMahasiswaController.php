@@ -96,6 +96,7 @@ class DashboardMahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::whereId($id)->first();
         Mahasiswa::destroy($id);
+        User::where('nim', $mahasiswa->nim)->delete();
         return redirect('/dashboard/mahasiswa')->with('success', "Mahasiswa dengan NIM $mahasiswa->nim berhasil dihapus!");
     }
 }
