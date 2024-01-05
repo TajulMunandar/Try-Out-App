@@ -27,7 +27,7 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahPaket">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -59,88 +59,57 @@
                                             <i class="fa-solid fa-list text-white"></i>
                                         </a>
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $loop->iteration }}">
+                                            data-bs-target="#editPaket{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
                                         <button id="delete-button" class="btn  btn-sm btn-danger" id="delete-button"
-                                            data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
+                                            data-bs-toggle="modal" data-bs-target="#hapusPaket{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
 
                                 {{--  MODAL EDIT  --}}
-                                <div class="modal fade" id="editModal{{ $loop->iteration }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data Paket</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('paket.update', $paket->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="mb-3">
-                                                            <label for="name" class="form-label">Nama Paket</label>
-                                                            <input type="text"
-                                                                class="form-control @error('name') is-invalid @enderror"
-                                                                name="name" value="{{ old('name', $paket->name) }}"
-                                                                id="name" placeholder="Anton" autofocus required>
-                                                            @error('name')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+                                <x-form_modal>
+                                    @slot('id', "editPaket$loop->iteration")
+                                    @slot('title', 'Edit Data Paket')
+                                    @slot('route', route('paket.update', $paket->id))
+                                    @slot('method') @method('put') @endslot
+                                    @slot('btnPrimaryTitle', 'Perbarui')
+                                    @csrf
+
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Nama Paket</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                name="name" value="{{ old('name', $paket->name) }}" id="name"
+                                                placeholder="Anton" autofocus required>
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit"
-                                                        class="btn btn-warning text-white">Perbarui</button>
-                                                </div>
-                                            </form>
+                                            @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </x-form_modal>
                                 {{--  MODAL EDIT  --}}
 
                                 {{--  MODAL DELETE  --}}
-                                <div class="modal fade" id="hapusModal{{ $loop->iteration }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete Data Mahasiswa</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('paket.destroy', $paket->id) }}"
-                                                method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-body">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="id" value="{{ $paket->id }}">
-                                                    <p class="fs-5">Apakah anda yakin akan menghapus paket
-                                                        <b>{{ $paket->name }} ?</b></p>
+                                <x-form_modal>
+                                    @slot('id', "hapusPaket$loop->iteration")
+                                    @slot('title', 'Hapus Data Paket')
+                                    @slot('route', route('paket.destroy', $paket->id))
+                                    @slot('method') @method('delete') @endslot
+                                    @slot('btnPrimaryClass', 'btn-outline-danger')
+                                    @slot('btnSecondaryClass', 'btn-secondary')
+                                    @slot('btnPrimaryTitle', 'Hapus')
+                                    @csrf
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <input type="hidden" name="id" value="{{ $paket->id }}">
+                                    <p class="fs-5">Apakah anda yakin akan menghapus paket
+                                        <b>{{ $paket->name }} ?</b>
+                                    </p>
+                                </x-form_modal>
                                 {{--  MODAL DELETE  --}}
                             @endforeach
                         </tbody>
@@ -152,37 +121,25 @@
     {{--  CONTENT  --}}
 
     {{--  MODAL ADD  --}}
-    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Paket</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('paket.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama Paket</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" id="name" placeholder="Anton" autofocus required>
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
+    <x-form_modal>
+        @slot('id', 'tambahPaket')
+        @slot('title', 'Tambah Data Paket')
+        @slot('route', route('paket.store'))
+        @csrf
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nama Paket</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
+                    placeholder="Anton" autofocus required>
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
-                    </div>
-                </form>
+                @enderror
             </div>
         </div>
-    </div>
+    </x-form_modal>
     {{--  MODAL ADD  --}}
 
 @endsection

@@ -27,7 +27,7 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahProdi">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -56,89 +56,60 @@
                                     <td>{{ $prodi->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $loop->iteration }}">
+                                            data-bs-target="#editProdi{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
                                         <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
-                                            data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
+                                            data-bs-toggle="modal" data-bs-target="#hapusProdi{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
 
                                 {{--  MODAL EDIT  --}}
-                                <div class="modal fade" id="editModal{{ $loop->iteration }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data Prodi</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('prodi.update', $prodi->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="mb-3">
-                                                            <input type="hidden" name="id"
-                                                                value="{{ $prodi->id }}">
-                                                            <input type="hidden" name="oldName" value="{{ $prodi->name }}">
-                                                            <label for="name" class="form-label">Nama Prodi</label>
-                                                            <input type="text"
-                                                                class="form-control @error('name') is-invalid @enderror"
-                                                                name="name" value="{{ old('name', $prodi->name) }}"
-                                                                id="name" placeholder="Prodi" autofocus required>
-                                                            @error('name')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+                                <x-form_modal>
+                                    @slot('id', "editProdi$loop->iteration")
+                                    @slot('title', 'Edit Data Prodi')
+                                    @slot('route', route('prodi.update', $prodi->id))
+                                    @slot('method') @method('put') @endslot
+                                    @slot('btnPrimaryTitle', 'Perbarui')
+                                    @csrf
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <input type="hidden" name="id" value="{{ $prodi->id }}">
+                                            <input type="hidden" name="oldName" value="{{ $prodi->name }}">
+                                            <label for="name" class="form-label">Nama Prodi</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                name="name" value="{{ old('name', $prodi->name) }}" id="name"
+                                                placeholder="Prodi" autofocus required>
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-warning text-white">Perbarui</button>
-                                                </div>
-                                            </form>
+                                            @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </x-form_modal>
                                 {{--  MODAL EDIT  --}}
 
                                 {{--  MODAL DELETE  --}}
-                                <div class="modal fade" id="hapusModal{{ $loop->iteration }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete Data Prodi</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('prodi.destroy', $prodi->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-body">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="id" value="{{ $prodi->id }}">
-                                                    <p class="fs-5">Apakah anda yakin akan menghapus prodi <b>{{ $prodi->name }} ?</b></p>
+                                <x-form_modal>
+                                    @slot('id', "hapusProdi$loop->iteration")
+                                    @slot('title', 'Hapus Data Prodi')
+                                    @slot('route', route('prodi.destroy', $prodi->id))
+                                    @slot('method') @method('delete') @endslot
+                                    @slot('btnPrimaryClass', 'btn-outline-danger')
+                                    @slot('btnSecondaryClass', 'btn-secondary')
+                                    @slot('btnPrimaryTitle', 'Hapus')
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @csrf
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="id" value="{{ $prodi->id }}">
+                                    <p class="fs-5">Apakah anda yakin akan menghapus prodi
+                                        <b>{{ $prodi->name }} ?</b>
+                                    </p>
+
+                                </x-form_modal>
                                 {{--  MODAL DELETE  --}}
                             @endforeach
                         </tbody>
@@ -150,37 +121,25 @@
     {{--  CONTENT  --}}
 
     {{--  MODAL ADD  --}}
-    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Prodi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('prodi.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama Prodi</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" id="name" placeholder="Prodi" autofocus required>
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
+    <x-form_modal>
+        @slot('id', 'tambahProdi')
+        @slot('title', 'Tambah Data Prodi')
+        @slot('route', route('prodi.store'))
+
+        @csrf
+        <div class="row">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nama Prodi</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
+                    placeholder="Prodi" autofocus required>
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
-                    </div>
-                </form>
+                @enderror
             </div>
         </div>
-    </div>
+    </x-form_modal>
     {{--  MODAL ADD  --}}
 
 @endsection

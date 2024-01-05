@@ -61,15 +61,15 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $soal_detail->name }}</td>
                                     <td>
-                                    @foreach ($soal_detail->jawabans as $key => $jawaban)
+                                        @foreach ($soal_detail->jawabans as $key => $jawaban)
                                             @php
                                                 $abjad = chr(97 + $key);
                                             @endphp
 
                                             {{ $abjad }}. {{ $jawaban->name }} <br>
                                             @if ($key === 3)
-                                                @break
-                                            @endif
+                                            @break
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td>
@@ -87,43 +87,27 @@
                                         href="{{ route('soal-detail.edit', ['soal_detail' => $soal_detail->id, 'soal_id' => $soal_id]) }}"><i
                                             class="fa-solid fa-pen-to-square"></i></a>
                                     <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
-                                        data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
+                                        data-bs-toggle="modal" data-bs-target="#hapusSoalDetail{{ $loop->iteration }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
 
                             {{--  MODAL DELETE  --}}
-                            <div class="modal fade" id="hapusModal{{ $loop->iteration }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Delete Data Question Choice
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{ route('soal-detail.destroy', $soal_detail->id) }}" method="POST"
-                                            enctype="multipart/form-data">
-                                            @method('PUT')
-                                            @csrf
-                                            <div class="modal-body">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" name="soal_id" id=""
-                                                    value="{{ $soal_id }}">
-                                                <p class="fs-5">Apakah anda yakin akan menghapus data </p>
-                                                <b>{{ $soal_detail->name }} ?</b>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-form_modal>
+                                @slot('id', "hapusSoalDetail$loop->iteration")
+                                @slot('title', 'Hapus Data Soal Detail')
+                                @slot('route', route('soal-detail.destroy', $soal_detail->id))
+                                @slot('method') @method('delete') @endslot
+                                @slot('btnPrimaryClass', 'btn-outline-danger')
+                                @slot('btnSecondaryClass', 'btn-secondary')
+                                @slot('btnPrimaryTitle', 'Hapus')
+                                @csrf
+
+                                <input type="hidden" name="soal_id" id="" value="{{ $soal_id }}">
+                                <p class="fs-5">Apakah anda yakin akan menghapus data </p>
+                                <b>{{ $soal_detail->name }} ?</b>
+                            </x-form_modal>
                             {{--  MODAL DELETE  --}}
                         @endforeach
                     </tbody>

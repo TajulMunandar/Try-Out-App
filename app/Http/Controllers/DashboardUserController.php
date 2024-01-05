@@ -68,7 +68,6 @@ class DashboardUserController extends Controller
     {
         $rules = [
             'nim' => 'required|max:255',
-            'is_admin' => 'required', 
         ];
         
         if ($request->nim != $user->nim) {
@@ -76,7 +75,6 @@ class DashboardUserController extends Controller
         }
         
         $validatedData = $request->validate($rules);
-        $validatedData['is_admin'] = intval($validatedData['is_admin']);
         
         $user1 = User::where('id', $user->id)->update($validatedData);
  

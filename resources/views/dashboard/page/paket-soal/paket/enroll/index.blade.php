@@ -27,7 +27,7 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahEnroll">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -45,7 +45,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Paket</th>
-                                <th>Prodi</th>
+                                <th>Soal</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -57,105 +57,75 @@
                                     <td>{{ $enrol->soals->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $loop->iteration }}">
+                                            data-bs-target="#editEnroll{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
                                         <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
-                                            data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
+                                            data-bs-toggle="modal" data-bs-target="#hapusEnroll{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
 
                                 {{--  MODAL EDIT  --}}
-                                <div class="modal fade" id="editModal{{ $loop->iteration }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data Enroll Paket</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('enrol.update', $enrol->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="mb-3">
-                                                            <label for="paket_detail_id" class="form-label">Paket</label>
-                                                            <select class="form-select" name="paket_detail_id" id="paket_detail_id">
-                                                                @foreach ($pakets as $paket)
-                                                                    @if (old('paket_detail_id', $enrol->paket_detail_id) == $paket->id)
-                                                                        <option value="{{ $paket->id }}" selected>
-                                                                            {{ $paket->name }}</option>
-                                                                    @else
-                                                                        <option value="{{ $paket->id }}">
-                                                                            {{ $paket->name }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="soal_id" class="form-label">soal</label>
-                                                            <select class="form-select" name="soal_id" id="soal_id">
-                                                                @foreach ($soals as $soal)
-                                                                    @if (old('soal_id', $enrol->soal_id) == $soal->id)
-                                                                        <option value="{{ $soal->id }}" selected>
-                                                                            {{ $soal->name }}</option>
-                                                                    @else
-                                                                        <option value="{{ $soal->id }}">
-                                                                            {{ $soal->name }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit"
-                                                        class="btn btn-warning text-white">Perbarui</button>
-                                                </div>
-                                            </form>
+                                <x-form_modal>
+                                    @slot('id', "editEnroll$loop->iteration")
+                                    @slot('title', 'Edit Data Enroll Paket')
+                                    @slot('route', route('enrol.update', $enrol->id))
+                                    @slot('method') @method('put') @endslot
+                                    @slot('btnPrimaryTitle', 'Perbarui')
+                                    @csrf
+
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label for="paket_detail_id" class="form-label">Paket</label>
+                                            <select class="form-select" name="paket_detail_id" id="paket_detail_id">
+                                                @foreach ($pakets as $paket)
+                                                    @if (old('paket_detail_id', $enrol->paket_detail_id) == $paket->id)
+                                                        <option value="{{ $paket->id }}" selected>
+                                                            {{ $paket->name }}</option>
+                                                    @else
+                                                        <option value="{{ $paket->id }}">
+                                                            {{ $paket->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="soal_id" class="form-label">soal</label>
+                                            <select class="form-select" name="soal_id" id="soal_id">
+                                                @foreach ($soals as $soal)
+                                                    @if (old('soal_id', $enrol->soal_id) == $soal->id)
+                                                        <option value="{{ $soal->id }}" selected>
+                                                            {{ $soal->name }}</option>
+                                                    @else
+                                                        <option value="{{ $soal->id }}">
+                                                            {{ $soal->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
+                                </x-form_modal>
                                 {{--  MODAL EDIT  --}}
 
                                 {{--  MODAL DELETE  --}}
-                                <div class="modal fade" id="hapusModal{{ $loop->iteration }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete Data Enroll Paket</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{ route('enrol.destroy', $enrol->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-body">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="id" value="{{ $enrol->id }}">
-                                                    <p class="fs-5">Apakah anda yakin akan menghapus enrol paket
-                                                        <b>{{ $enrol->soals->name }} ?</b>
-                                                    </p>
+                                <x-form_modal>
+                                    @slot('id', "hapusEnroll$loop->iteration")
+                                    @slot('title', 'Hapus Data Enroll Paket')
+                                    @slot('route', route('enrol.destroy', $enrol->id))
+                                    @slot('method') @method('delete') @endslot
+                                    @slot('btnPrimaryClass', 'btn-outline-danger')
+                                    @slot('btnSecondaryClass', 'btn-secondary')
+                                    @slot('btnPrimaryTitle', 'Hapus')
+                                    @csrf
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <input type="hidden" name="id" value="{{ $enrol->id }}">
+                                    <p class="fs-5">Apakah anda yakin akan menghapus enrol paket
+                                        <b>{{ $enrol->soals->name }} ?</b>
+                                    </p>
+
+                                </x-form_modal>
                                 {{--  MODAL DELETE  --}}
                             @endforeach
                         </tbody>
@@ -167,45 +137,33 @@
     {{--  CONTENT  --}}
 
     {{--  MODAL ADD  --}}
-    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Enroll Paket </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('enrol.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="soal_id" class="form-label">Soal</label>
-                                <select class="form-select" name="soal_id" id="soal_id">
-                                    @foreach ($soals as $soal)
-                                        <option value="{{ $soal->id }}">
-                                            {{ $soal->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="paket_detail_id" class="form-label">Paket</label>
-                                <select class="form-select" name="paket_detail_id" id="paket_detail_id">
-                                    @foreach ($pakets as $paket)
-                                        <option value="{{ $paket->id }}">
-                                            {{ $paket->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
-                    </div>
-                </form>
+    <x-form_modal>
+        @slot('id', 'tambahEnroll')
+        @slot('title', 'Tambah Data Enroll Paket')
+        @slot('route', route('enrol.store'))
+        @csrf
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="paket_detail_id" class="form-label">Paket</label>
+                <select class="form-select" name="paket_detail_id" id="paket_detail_id">
+                    @foreach ($pakets as $paket)
+                        <option value="{{ $paket->id }}">
+                            {{ $paket->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="soal_id" class="form-label">Soal</label>
+                <select class="form-select" name="soal_id" id="soal_id">
+                    @foreach ($soals as $soal)
+                        <option value="{{ $soal->id }}">
+                            {{ $soal->name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
-    </div>
+    </x-form_modal>
     {{--  MODAL ADD  --}}
 
 @endsection
