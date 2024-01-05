@@ -36,6 +36,12 @@
                                 Paket
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('dashboard/paket-soal/enrol*') ? 'active' : '' }}"
+                                href="{{ route('enrol.index') }}">
+                                Enroll Paket
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

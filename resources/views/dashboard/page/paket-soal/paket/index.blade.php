@@ -39,15 +39,6 @@
             <div class="card mt-3 col-sm-6 col-md-12">
                 <div class="card-body">
 
-                    <ul class="nav nav-pills mb-3">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Paket</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Enroll Paket</a>
-                        </li>
-                    </ul>
-
                     {{-- tables --}}
                     <table id="myTable" class="table responsive nowrap table-bordered table-striped align-middle"
                         style="width:100%">
@@ -64,14 +55,14 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $paket->name }}</td>
                                     <td>
-                                        <a href="{{ route('paket.show', $paket->id) }}" class="btn btn-info">
+                                        <a href="{{ route('paket.show', $paket->id) }}" class="btn btn-sm btn-info">
                                             <i class="fa-solid fa-list text-white"></i>
                                         </a>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
-                                        <button id="delete-button" class="btn btn-danger" id="delete-button"
+                                        <button id="delete-button" class="btn  btn-sm btn-danger" id="delete-button"
                                             data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>

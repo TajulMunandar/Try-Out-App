@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardEnrollController;
 use App\Http\Controllers\DashboardMahasiswaController;
 use App\Http\Controllers\DashboardPaketController;
 use App\Http\Controllers\DashboardPaketDetailController;
@@ -42,9 +43,13 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::resource('/mahasiswa', DashboardMahasiswaController::class);
     Route::prefix('/paket-soal')->group(function () {
         Route::resource('/paket', DashboardPaketController::class);
-        Route::resource('/paket/paket-detail', DashboardPaketDetailController::class)->names('paket-detail');
+        Route::prefix('/paket')->group(function () {
+            Route::resource('/paket-detail', DashboardPaketDetailController::class);
+        });
         Route::resource('/soal', DashboardSoalController::class);
-        Route::resource('/soal/soal-detail', DashboardSoalDetailController::class)->names('soal-detail');
+        Route::prefix('/soal')->group(function () {
+            Route::resource('/soal-detail', DashboardSoalDetailController::class);
+        });
+        Route::resource('/enrol', DashboardEnrollController::class);
     });
-    
 });

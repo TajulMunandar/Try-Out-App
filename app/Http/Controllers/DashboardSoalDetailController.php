@@ -58,7 +58,7 @@ class DashboardSoalDetailController extends Controller
         ]);
 
         return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Soal Detail baru berhasil dibuat!');
-        
+
     }
 
     /**
@@ -90,7 +90,7 @@ class DashboardSoalDetailController extends Controller
             'name' => 'required|max:255',
             'soal_id' => 'required'
         ]);
-        
+
         // dd($request, $id);
         foreach($request->answer as $key => $value) {
             $status = false;

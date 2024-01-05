@@ -55,11 +55,11 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $prodi->name }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
-                                        <button id="delete-button" class="btn btn-danger" id="delete-button"
+                                        <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
                                             data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>

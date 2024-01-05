@@ -27,6 +27,10 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
+            <a class="btn btn-outline-secondary" href="{{ route('paket.index') }}">
+                <i class="fa-solid fa-chevron-left"></i>
+                Kembali
+            </a>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -38,15 +42,6 @@
 
             <div class="card mt-3 col-sm-6 col-md-12">
                 <div class="card-body">
-
-                    <ul class="nav nav-pills mb-3">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Paket</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Enroll Paket</a>
-                        </li>
-                    </ul>
 
                     {{-- tables --}}
                     <table id="myTable" class="table responsive nowrap table-bordered table-striped align-middle"
@@ -66,11 +61,11 @@
                                     <td>{{ $paket_detail->name }}</td>
                                     <td>{{ $paket_detail->prodis->name }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
-                                        <button id="delete-button" class="btn btn-danger" id="delete-button"
+                                        <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
                                             data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>

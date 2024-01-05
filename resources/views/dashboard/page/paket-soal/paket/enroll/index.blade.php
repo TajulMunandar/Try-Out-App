@@ -1,6 +1,6 @@
 @extends('dashboard.component.main')
-@section('title', 'Data Mahasiswa')
-@section('page-heading', 'Data Mahasiswa')
+@section('title', 'Data Enroll Paket')
+@section('page-heading', 'Data Enroll Paket')
 
 @section('content')
 
@@ -27,7 +27,7 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -38,28 +38,23 @@
 
             <div class="card mt-3 col-sm-6 col-md-12">
                 <div class="card-body">
-
                     {{-- tables --}}
                     <table id="myTable" class="table responsive nowrap table-bordered table-striped align-middle"
                         style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>NIM</th>
-                                <th>Kelas</th>
+                                <th>Paket</th>
                                 <th>Prodi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($mahasiswas as $mahasiswa)
+                            @foreach ($enrols as $enrol)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $mahasiswa->name }}</td>
-                                    <td>{{ $mahasiswa->nim }}</td>
-                                    <td>{{ $mahasiswa->kelas }}</td>
-                                    <td>{{ $mahasiswa->prodis->name }}</td>
+                                    <td>{{ $enrol->paket_details->name }}</td>
+                                    <td>{{ $enrol->soals->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $loop->iteration }}">
@@ -78,48 +73,40 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data Mahasiswa</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data Enroll Paket</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="POST"
+                                            <form action="{{ route('enrol.update', $enrol->id) }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="mb-3">
-                                                            <label for="name" class="form-label">Nama Mahasiswa</label>
-                                                            <input type="text"
-                                                                class="form-control @error('name') is-invalid @enderror"
-                                                                name="name" value="{{ old('name', $mahasiswa->name) }}"
-                                                                id="name" placeholder="Anton" autofocus required>
-                                                            @error('name')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="kelas" class="form-label">Kelas</label>
-                                                            <input type="text"
-                                                                class="form-control @error('kelas') is-invalid @enderror"
-                                                                name="kelas" value="{{ old('kelas', $mahasiswa->kelas) }}"
-                                                                id="kelas" placeholder="4B" autofocus required>
-                                                            @error('kelas')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="prodi_id" class="form-label">Prodi</label>
-                                                            <select class="form-select" name="prodi_id" id="prodi_id">
-                                                                @foreach ($prodis as $prodi)
-                                                                    @if (old('prodi_id', $mahasiswa->prodi_id) == $prodi->id)
-                                                                        <option value="{{ $prodi->id }}" selected>{{ $prodi->name }}</option>
+                                                            <label for="paket_detail_id" class="form-label">Paket</label>
+                                                            <select class="form-select" name="paket_detail_id" id="paket_detail_id">
+                                                                @foreach ($pakets as $paket)
+                                                                    @if (old('paket_detail_id', $enrol->paket_detail_id) == $paket->id)
+                                                                        <option value="{{ $paket->id }}" selected>
+                                                                            {{ $paket->name }}</option>
                                                                     @else
-                                                                        <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
+                                                                        <option value="{{ $paket->id }}">
+                                                                            {{ $paket->name }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="soal_id" class="form-label">soal</label>
+                                                            <select class="form-select" name="soal_id" id="soal_id">
+                                                                @foreach ($soals as $soal)
+                                                                    @if (old('soal_id', $enrol->soal_id) == $soal->id)
+                                                                        <option value="{{ $soal->id }}" selected>
+                                                                            {{ $soal->name }}</option>
+                                                                    @else
+                                                                        <option value="{{ $soal->id }}">
+                                                                            {{ $soal->name }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -129,7 +116,8 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-warning text-white">Perbarui</button>
+                                                    <button type="submit"
+                                                        class="btn btn-warning text-white">Perbarui</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -143,18 +131,20 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete Data Mahasiswa</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete Data Enroll Paket</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <form action="{{ route('mahasiswa.destroy', $mahasiswa->id) }}" method="POST"
+                                            <form action="{{ route('enrol.destroy', $enrol->id) }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="id" value="{{ $mahasiswa->id }}">
-                                                    <p class="fs-5">Apakah anda yakin akan menghapus mahasiswa <b>{{ $mahasiswa->name }} ?</b></p>
+                                                    <input type="hidden" name="id" value="{{ $enrol->id }}">
+                                                    <p class="fs-5">Apakah anda yakin akan menghapus enrol paket
+                                                        <b>{{ $enrol->soals->name }} ?</b>
+                                                    </p>
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -181,59 +171,31 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Mahasiswa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Enroll Paket </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('mahasiswa.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('enrol.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nama Mahasiswa</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" id="name" placeholder="Anton" autofocus required>
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                <label for="soal_id" class="form-label">Soal</label>
+                                <select class="form-select" name="soal_id" id="soal_id">
+                                    @foreach ($soals as $soal)
+                                        <option value="{{ $soal->id }}">
+                                            {{ $soal->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="mb-3">
-                                <label for="nim" class="form-label">NIM</label>
-                                <input type="text" class="form-control @error('nim') is-invalid @enderror"
-                                    name="nim" id="nim" placeholder="123...." autofocus required>
-                                @error('nim')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                <label for="paket_detail_id" class="form-label">Paket</label>
+                                <select class="form-select" name="paket_detail_id" id="paket_detail_id">
+                                    @foreach ($pakets as $paket)
+                                        <option value="{{ $paket->id }}">
+                                            {{ $paket->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="kelas" class="form-label">Kelas</label>
-                                <input type="text" class="form-control @error('kelas') is-invalid @enderror"
-                                    name="kelas" id="kelas" placeholder="4B" autofocus required>
-                                @error('kelas')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="prodi_id" class="form-label">Prodi</label>
-                            <select class="form-select" name="prodi_id" id="prodi_id">
-                                @foreach ($prodis as $prodi)
-                                    @if (old('prodi_id', $prodi->id) == $prodi->id)
-                                        <option value="{{ $prodi->id }}" selected>{{ $prodi->name }}</option>
-                                    @else
-                                        <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

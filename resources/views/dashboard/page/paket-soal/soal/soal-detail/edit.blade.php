@@ -5,6 +5,10 @@
 @section('content')
     <div class="row mt-6">
         <div class="col-sm-6 col-md-12 col-lg-8">
+            <a class="btn btn-outline-secondary" href="{{ route('soal.show', $soal_id) }}">
+                <i class="fa-solid fa-chevron-left"></i>
+                Kembali
+            </a>
             <div class="card mt-3">
                 <h5 class="card-header">Edit Soal Detail</h5>
                 <form action="{{ route('soal-detail.update', $soal_detail->id) }}" method="POST" enctype="multipart/form-data">

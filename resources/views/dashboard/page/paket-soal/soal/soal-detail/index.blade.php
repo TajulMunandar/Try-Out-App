@@ -27,7 +27,11 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
-            <a class="btn btn-dark" href="{{ route('soal-detail.create', ['soal_id' => $soal_id]) }}">
+            <a class="btn btn-outline-secondary" href="{{ route('soal.index') }}">
+                <i class="fa-solid fa-chevron-left"></i>
+                Kembali
+            </a>
+            <a class="btn btn-primary" href="{{ route('soal-detail.create', ['soal_id' => $soal_id]) }}">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -79,10 +83,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-warning text-white"
+                                    <a class="btn btn-sm btn-warning text-white"
                                         href="{{ route('soal-detail.edit', ['soal_detail' => $soal_detail->id, 'soal_id' => $soal_id]) }}"><i
                                             class="fa-solid fa-pen-to-square"></i></a>
-                                    <button id="delete-button" class="btn btn-danger" id="delete-button"
+                                    <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
                                         data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>

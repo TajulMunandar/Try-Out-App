@@ -55,14 +55,14 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $soal->name }}</td>
                                     <td>
-                                        <a href="{{ route('soal.show', $soal->id) }}" class="btn btn-info">
+                                        <a href="{{ route('soal.show', $soal->id) }}" class="btn btn-sm btn-info">
                                             <i class="fa-solid fa-list text-white"></i>
                                         </a>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
-                                        <button id="delete-button" class="btn btn-danger" id="delete-button"
+                                        <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
                                             data-bs-toggle="modal" data-bs-target="#hapusModal{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
