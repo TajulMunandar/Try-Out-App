@@ -6,7 +6,8 @@
             <div class="col-lg-5 col-md-12">
                 <p class="hastag" data-aos="fade-right" data-aos-duration="1000">#PejuangIlmu</p>
                 <h2 class="fw-bolder mb-3 lh-base" data-aos="fade-right" data-aos-duration="1200" style="color: #001C30;">
-                    {{ $modul->name }}</h2>
+                    {{ $modul->name }}
+                </h2>
             </div>
         </div>
         <div class="row" data-aos="fade-up" data-aos-duration="1000">

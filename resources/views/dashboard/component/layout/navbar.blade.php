@@ -15,19 +15,18 @@
             <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <div class="avatar avatar-md avatar-indicators avatar-online">
-                    {{-- @if (auth()->user()->image)
-                        <img alt="avatar" src="{{ asset('storage/' . auth()->user()->image) }}" class="rounded-circle" />
-                    @else
-                        <img alt="avatar" src="{{ asset('images/avatar.png') }}" class="rounded-circle" />
-                    @endif --}}
+                    <img alt="avatar" src="{{ asset('images/avatar.png') }}" class="rounded-circle" />
                 </div>
             </a>
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                 <div class="px-4 pb-0 pt-2">
                     <div class="lh-1 mb-2">
-                        {{-- <h5 class="mb-4">{{ auth()->user()->name }}</h5> --}}
-                        <a href="/profile">Profile</a>
+                        <h5 class="mb-4">{{ auth()->user()->username }}</h5>
+                        <a href="/main">
+                            <i class="fa-solid fa-house me-2"></i>
+                            Main Page
+                        </a>
                     </div>
                 </div>
             </div>

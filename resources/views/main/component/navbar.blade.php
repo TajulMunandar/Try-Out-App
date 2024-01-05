@@ -1,15 +1,14 @@
 <nav class="navbar p-4">
-    <div class="container-fluid px-5">
-        <a class="navbar-brand" href="/">E-Modul</a>
+    <div class="container-fluid px-5 mx-5">
+        <a class="navbar-brand" href="/main">SI-ETO</a>
         @if (auth()->user())
             <div class="d-flex">
                 <div class="dropdown">
                     <button class="btn btn-login dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ auth()->user()->name }}
+                        {{ auth()->user()->username }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li ><a  class="dropdown-item"href="/profile">Profile</a></li>
-                        @if (auth()->user()->role == 1 || auth()->user()->role == 2)
+                        @if (auth()->user()->is_admin == 1 || auth()->user()->is_admin == 2)
                         <li ><a  class="dropdown-item"href="/dashboard">Dashboard</a></li>
                         @endif
                         <form action="/logout" method="post">

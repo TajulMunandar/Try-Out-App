@@ -3,7 +3,7 @@
 
 <head>
     @include('main.component.head')
-    <title>E-Modul</title>
+    <title>SI-ETO</title>
 </head>
 
 <body style="background-color: #DDE6ED">

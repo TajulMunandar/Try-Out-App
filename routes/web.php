@@ -10,6 +10,8 @@ use App\Http\Controllers\DashboardSoalController;
 use App\Http\Controllers\DashboardSoalDetailController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\PaketController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -53,3 +55,6 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         Route::resource('/enrol', DashboardEnrollController::class);
     });
 });
+
+Route::resource('/main', MainController::class);
+Route::resource('/paket', PaketController::class);
