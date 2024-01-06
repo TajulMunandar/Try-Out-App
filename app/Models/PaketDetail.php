@@ -27,4 +27,9 @@ class PaketDetail extends Model
     {
         return $this->hasMany(PaketSoal::class, 'paket_detail_id', 'id');
     }
+
+    public function jawaban_mahasiswas()
+    {
+        return $this->hasMany(JawabanMahasiswa::class, 'paket_detail_id', 'id');
+    }
 }

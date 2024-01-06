@@ -23,4 +23,9 @@ class JawabanMahasiswa extends Model
         return $this->belongsTo(Jawaban::class, 'jawaban_id', 'id');
     }
 
+    public function paket_details()
+    {
+        return $this->belongsTo(PaketDetail::class, 'paket_detail_id', 'id');
+    }
+
 }

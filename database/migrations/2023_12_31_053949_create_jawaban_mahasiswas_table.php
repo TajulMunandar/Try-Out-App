@@ -17,6 +17,8 @@ return new class extends Migration
             $table->index('jawaban_id');
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onUpdate('cascade')->onDelete('restrict');
             $table->index('mahasiswa_id');
+            $table->foreignId('paket_detail_id')->constrained('paket_details')->onUpdate('cascade')->onDelete('restrict');
+            $table->index('paket_detail_id');
             $table->timestamps();
         });
     }
