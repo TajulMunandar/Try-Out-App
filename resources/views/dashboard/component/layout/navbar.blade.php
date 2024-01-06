@@ -22,7 +22,7 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                 <div class="px-4 pb-0 pt-2">
                     <div class="lh-1 mb-2">
-                        <h5 class="mb-4">{{ auth()->user()->username }}</h5>
+                        <h5 class="mb-4">{{ strtoupper(auth()->user()->username) }}</h5>
                         <a href="/main">
                             <i class="fa-solid fa-house me-2"></i>
                             Main Page

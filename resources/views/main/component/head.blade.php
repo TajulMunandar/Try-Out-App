@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="{{ asset('fontawesome/css/regular.min.css') }}">
 <link rel="stylesheet" href="{{ asset('fontawesome/css/brands.min.css') }}">
 <link rel="stylesheet" href="{{ asset('fontawesome/css/solid.min.css') }}">
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
 
 @yield('style')
 

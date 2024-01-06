@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paket;
+use App\Models\PaketDetail;
+use App\Models\PaketSoal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaketController extends Controller
@@ -13,6 +16,7 @@ class PaketController extends Controller
     public function index()
     {
         $pakets = Paket::all();
+
         return view('main.page.paket')->with(compact('pakets'));
     }
 
@@ -35,9 +39,11 @@ class PaketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Paket $paket_main)
     {
-        //
+        $paketSoal = PaketSoal::all();
+        $pakets = PaketDetail::where('paket_id', $paket_main->id)->get();
+        return view('main.page.paket_detail')->with(compact('pakets', 'paket_main', 'paketSoal'));
     }
 
     /**

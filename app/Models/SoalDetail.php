@@ -21,4 +21,6 @@ class SoalDetail extends Model
     {
         return $this->hasMany(Jawaban::class, 'soal_detail_id', 'id');
     }
+
+
 }

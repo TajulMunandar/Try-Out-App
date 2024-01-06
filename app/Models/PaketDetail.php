@@ -27,4 +27,11 @@ class PaketDetail extends Model
     {
         return $this->hasMany(PaketSoal::class, 'paket_detail_id', 'id');
     }
+
+    public function countSoals()
+    {
+        return $this->paket_soals->sum(function ($paketSoal) {
+            return $paketSoal->soals->soal_details->count();
+        });
+    }
 }

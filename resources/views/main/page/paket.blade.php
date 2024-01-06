@@ -9,27 +9,56 @@
                     Bentuklah Masa Depanmu Melalui Kepahaman Ilmu</h2>
             </div>
         </div>
-        <div class="row p-5 h-100" data-aos="fade-up" data-aos-duration="1500">
+        <div class="row p-5 h-100" data-aos="fade-up" data-aos-duration="1000">
             @foreach ($pakets as $paket)
-                <div class="col mb-3">
-                    <div class="card" style="width: 22rem;">
-                        <div class="card-body">
-                            {{-- <img src="{{ asset('storage/' . $paket->image) }}" class="card-img-top" alt="..."
-                                style="height: 12rem; object-fit: cover"> --}}
-                            <div class="row">
-                                <div class="col">
-                                    <a class="card-title fw-bold text-black fs-4 stretched-link"
-                                        href="#"
-                                        style="text-decoration: none">{{ $paket->name }}</a>
+                @if ($paket->paket_details->isNotEmpty())
+                    <div class="col mb-3">
+                        <div class="card shadow" style="width: 22rem;">
+                            <div class="card-body">
+                                <img src="{{ asset('images/quis.jpg') }}" class="card-img-top" alt="..."
+                                    style="height: 12rem; object-fit: cover">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="card-title fw-bold text-black fs-4 stretched-link"
+                                            href="{{ route('paket-main.show', $paket->id) }}"
+                                            style="text-decoration: none">{{ strtoupper($paket->name) }}</a>
+                                    </div>
                                 </div>
-                                {{-- <div class="col text-end">
-                                    <p class="badge bg-primary mt-2"><span>{{ $paket->users->name }}</span></p>
-                                </div> --}}
+                                <div class="row">
+                                    <p class="m-0 fw-bold ">Mata Kuliah</p>
+                                    <div class="col">
+                                        @foreach ($paket->paket_details as $paketd)
+                                            <p class="badge bg-primary mt-2">
+                                                <span>
+                                                    {{ $paketd->name }}
+                                                </span>
+                                            </p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    @php
+                                        $start = \Carbon\Carbon::parse($paket->start)->format('l M Y');
+                                        $end = \Carbon\Carbon::parse($paket->end)->format('l M Y');
+                                        $starth = \Carbon\Carbon::parse($paket->start)->format('H:i');
+                                        $endh = \Carbon\Carbon::parse($paket->end)->format('H:i');
+                                    @endphp
+                                    <div class="col">
+                                        <p class="m-0 fw-bold">Start Date</p>
+                                        <p class="m-0" style="font-size: 14px">{{ $start }}</p>
+                                        <p style="font-size: 14px">{{ $starth }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="m-0 fw-bold">End Date</p>
+                                        <p class="m-0" style="font-size: 14px">{{ $end }}</p>
+                                        <p style="font-size: 14px">{{ $endh }}</p>
+                                    </div>
+                                </div>
+                                <p class="card-text">{{ $paket->deskripsi }}</p>
                             </div>
-                            <p class="card-text">{{ $paket->deskripsi }}</p>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
         </div>
     </div>

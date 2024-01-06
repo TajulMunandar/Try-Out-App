@@ -5,7 +5,7 @@
             <div class="d-flex">
                 <div class="dropdown">
                     <button class="btn btn-login dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ auth()->user()->username }}
+                        {{ strtoupper(auth()->user()->username) }}
                     </button>
                     <ul class="dropdown-menu">
                         @if (auth()->user()->is_admin == 1 || auth()->user()->is_admin == 2)
