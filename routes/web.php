@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardEnrollController;
 use App\Http\Controllers\DashboardMahasiswaController;
 use App\Http\Controllers\DashboardPaketController;
 use App\Http\Controllers\DashboardPaketDetailController;
+use App\Http\Controllers\DashboardPenilaianController;
 use App\Http\Controllers\DashboardProdiController;
 use App\Http\Controllers\DashboardSoalController;
 use App\Http\Controllers\DashboardSoalDetailController;
@@ -54,6 +55,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         });
         Route::resource('/enrol', DashboardEnrollController::class);
     });
+    Route::get('/penilaian', [DashboardPenilaianController::class, 'index'])->name('penilaian.index');
 });
 
 Route::resource('/main', MainController::class);
