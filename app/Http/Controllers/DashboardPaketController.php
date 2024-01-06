@@ -33,7 +33,9 @@ class DashboardPaketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'start' => 'required',
+            'end' => 'required'
         ]); 
 
         Paket::create($validatedData);
@@ -68,6 +70,8 @@ class DashboardPaketController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
+            'start' => 'required',
+            'end' => 'required'
         ];
 
         $validatedData = $request->validate($rules);

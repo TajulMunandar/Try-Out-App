@@ -1,6 +1,6 @@
 @extends('dashboard.component.main')
-@section('title', 'Data Question Quizz Choice')
-@section('page-heading', 'Data Question Quizz Choice')
+@section('title', 'Data Soal Detai')
+@section('page-heading', 'Data Soal Detai')
 
 @section('content')
     <div class="row mt-6">

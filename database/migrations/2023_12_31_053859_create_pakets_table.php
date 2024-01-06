@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('pakets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->datetime('start');
+            $table->datetime('end');
             $table->timestamps();
         });
     }

@@ -33,6 +33,7 @@ class DashboardUserController extends Controller
     { 
         $validatedData = $request->validate([ 
             'nim' => ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'],
+            'username' => 'required',
             'password' => 'required|max:255',
             'is_admin' => 'required'
         ]);
@@ -68,6 +69,7 @@ class DashboardUserController extends Controller
     {
         $rules = [
             'nim' => 'required|max:255',
+            'username' => 'required'
         ];
         
         if ($request->nim != $user->nim) {
@@ -76,7 +78,7 @@ class DashboardUserController extends Controller
         
         $validatedData = $request->validate($rules);
         
-        $user1 = User::where('id', $user->id)->update($validatedData);
+        User::where('id', $user->id)->update($validatedData);
  
 
         return redirect('/dashboard/user')->with('success', 'User berhasil diperbarui!');

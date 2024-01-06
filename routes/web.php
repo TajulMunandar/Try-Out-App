@@ -57,4 +57,4 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
 });
 
 Route::resource('/main', MainController::class);
-Route::resource('/paket', PaketController::class);
+Route::resource('/paket-main', PaketController::class);

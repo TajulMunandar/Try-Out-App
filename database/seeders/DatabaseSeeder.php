@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'nim' => '123123',
             'password' => 'admin',
+            'username' => 'admin',
         ]);
     }
 }

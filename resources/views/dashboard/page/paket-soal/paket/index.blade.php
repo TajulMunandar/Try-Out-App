@@ -46,6 +46,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Paket</th>
+                                <th>Start</th>
+                                <th>End</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -54,6 +56,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $paket->name }}</td>
+                                    <td>{{ $paket->start }}</td>
+                                    <td>{{ $paket->end }}</td>
                                     <td>
                                         <a href="{{ route('paket.show', $paket->id) }}" class="btn btn-sm btn-info">
                                             <i class="fa-solid fa-list text-white"></i>
@@ -85,6 +89,26 @@
                                                 name="name" value="{{ old('name', $paket->name) }}" id="name"
                                                 placeholder="Anton" autofocus required>
                                             @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="start" class="form-label">Start</label>
+                                            <input type="datetime-local" class="form-control @error('start') is-invalid @enderror"
+                                                name="start" id="start" value="{{ old('start', $paket->start) }}" required>
+                                            @error('start')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="end" class="form-label">Last Time</label>
+                                            <input type="datetime-local" class="form-control @error('end') is-invalid @enderror"
+                                                name="end" id="end" value="{{ old('end', $paket->end) }}" required>
+                                            @error('end')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -133,6 +157,26 @@
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
                     placeholder="Anton" autofocus required>
                 @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="start" class="form-label">Start</label>
+                <input type="datetime-local" class="form-control @error('start') is-invalid @enderror" name="start"
+                    id="start" required>
+                @error('start')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="end" class="form-label">End</label>
+                <input type="datetime-local" class="form-control @error('end') is-invalid @enderror" name="end"
+                    id="end" required>
+                @error('end')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

@@ -44,6 +44,7 @@ class DashboardMahasiswaController extends Controller
         $validatedData['nim'] = $request->nim;
         $validatedData['password'] = Hash::make($request->nim);
         $validatedData['is_admin'] = 0;
+        $validatedData['username'] = strtolower(str_replace(' ', '', $request->name));
 
         $user = User::create($validatedData);
 
