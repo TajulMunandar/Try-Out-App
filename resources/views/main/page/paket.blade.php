@@ -17,8 +17,8 @@
                             <div class="card-body">
                                 <img src="{{ asset('images/quis.jpg') }}" class="card-img-top" alt="..."
                                     style="height: 12rem; object-fit: cover">
-                                <div class="row">
-                                    <div class="col">
+                                <div class="row mt-2">
+                                    <div class="col text-center">
                                         <a class="card-title fw-bold text-black fs-4 stretched-link"
                                             href="{{ route('paket-main.show', $paket->id) }}"
                                             style="text-decoration: none">{{ strtoupper($paket->name) }}</a>
@@ -36,7 +36,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row ">
                                     @php
                                         $start = \Carbon\Carbon::parse($paket->start)->format('l M Y');
                                         $end = \Carbon\Carbon::parse($paket->end)->format('l M Y');

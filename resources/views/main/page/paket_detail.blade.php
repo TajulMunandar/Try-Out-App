@@ -33,27 +33,20 @@
                         <div class="card-body">
                             <img src="{{ asset('images/quis.jpg') }}" class="card-img-top" alt="..."
                                 style="height: 12rem; object-fit: cover">
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col">
-                                    <a class="card-title fw-bold text-black fs-4 stretched-link" href="#"
-                                        style="text-decoration: none">{{ strtoupper($paket->name) }}</a>
+                                    <p class="card-title fw-bold text-black fs-4 stretched-link" href="#"
+                                        style="text-decoration: none">{{ strtoupper($paket->name) }}</p>
                                 </div>
                                 <div class="col text-end">
-                                    <p class="m-0">
-                                        <span>
-                                            {{ $paket->prodis->name }}
-                                        </span>
-                                    </p>
-                                    <p class="m-0">90</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
                                     <p class="m-0 fw-bold">Total Soal</p>
                                     <p >{{ $paket->countSoals() }}</p>
                                 </div>
+
                             </div>
-                            <p class="card-text">{{ $paket->deskripsi }}</p>
+                            <a class="btn btn-primary stretched-link float-end" href="{{ route('quiz.show', $paket->id) }}" >
+                                Mulai
+                            </a>
                         </div>
                     </div>
                 </div>

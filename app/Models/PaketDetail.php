@@ -39,4 +39,5 @@ class PaketDetail extends Model
             return $paketSoal->soals->soal_details->count();
         });
     }
+
 }

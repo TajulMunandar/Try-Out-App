@@ -2,26 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Log;
+use App\Models\PaketDetail;
+use App\Models\PaketSoal;
+use App\Models\Soal;
 use Illuminate\Http\Request;
 
-class MainController extends Controller
+class QuizController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $check = Log::where('visitor_ip', $request->ip())->whereDate('created_at', '=', (new \DateTime())->format('Y-m-d'))->first();
-
-        if(!isset($check)){
-            Log::create(['visitor_ip' => $request->ip()]);
-        }
-
-        return view('main.page.index', [
-            'user' => (new \DateTime())->format('Y-m-d')
-        ]);
-
+        //
     }
 
     /**
@@ -43,9 +36,17 @@ class MainController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(PaketDetail $quiz)
     {
-        //
+        $allSoalDetails = collect();
+
+        foreach ($quiz->paket_soals as $paketSoal) {
+            $allSoalDetails = $allSoalDetails->merge($paketSoal->soals->soal_details);
+        }
+
+        $shuffledSoalDetails = $allSoalDetails->shuffle();
+
+        return view('main.page.quiz')->with(compact('quiz', 'shuffledSoalDetails'));
     }
 
     /**

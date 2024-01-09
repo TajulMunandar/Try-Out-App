@@ -19,7 +19,9 @@ return new class extends Migration
                 m.name AS mahasiswa_name,
                 pd.name AS paket_detail_name,
                 COUNT(*) AS total_jawaban,
-                SUM(CAST(j.status AS SIGNED)) AS score_benar
+                SUM(CAST(j.status AS SIGNED)) AS score_benar,
+                NOW() AS created_at,
+                NOW() AS updated_at
             FROM
                 jawaban_mahasiswas jm
             JOIN

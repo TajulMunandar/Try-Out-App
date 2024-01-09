@@ -47,7 +47,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('penilaian.index') }}">
+                <a class="nav-link {{ Request::is('dashboard/penilaian') ? 'active' : '' }}"
+                    href="{{ route('penilaian.index') }}">
                     <i class="fa-solid fa-hundred-points me-3 nav-icon"></i>
                     Penilaian
                 </a>

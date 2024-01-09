@@ -2,7 +2,7 @@
 @section('page-heading', 'Dashboard')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-4">
         <div class="row mb-3">
             <h2>Data Global</h2>
             <div class="col-lg-4">
@@ -11,7 +11,7 @@
                         <div class="row d-flex align-items-center">
                             <div class="col">
                                 <h3 class="fw-light">Mahasiswa</h3>
-                                <h3 class="fw-bold"></h3>
+                                <h3 class="fw-bold">{{ $mahasiswa }}</h3>
                             </div>
                             <div class="col">
                                 <span class="float-end pe-3">
@@ -27,12 +27,12 @@
                     <div class="card-body p-5">
                         <div class="row d-flex align-items-center">
                             <div class="col">
-                                <h3 class="fw-light">Dosen</h3>
-                                <h3 class="fw-bold"></h3>
+                                <h3 class="fw-light">Mata Kuliah</h3>
+                                <h3 class="fw-bold">{{ $prodi }}</h3>
                             </div>
                             <div class="col">
                                 <span class="float-end pe-3">
-                                    <i class="fa-solid fa-user fs-2 text-warning"></i>
+                                    <i class="fa-solid fa-chalkboard-user fs-2 text-warning"></i>
                                 </span>
                             </div>
                         </div>
@@ -44,8 +44,8 @@
                     <div class="card-body p-5">
                         <div class="row d-flex align-items-center">
                             <div class="col">
-                                <h3 class="fw-light">Modul</h3>
-                                <h3 class="fw-bold"></h3>
+                                <h3 class="fw-light">Paket</h3>
+                                <h3 class="fw-bold">{{ $paket }}</h3>
                             </div>
                             <div class="col">
                                 <span class="float-end pe-3">
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Contoh elemen div untuk menampilkan grafik -->
-        {{-- <div class="row mb-2">
+        <div class="row mb-2">
             <div class="col-lg-8">
                 <h3>Traffic Pengunjung</h3>
                 <div class="card">
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col">
-                <h3>Highlight Modul Terupdate</h3>
+                <h3>Highlight Try Out Terupdate</h3>
                 <div class="row">
                     @foreach ($highlights as $materi)
                         <div class="col-lg-12">
@@ -77,19 +77,21 @@
                                 <div class="card-body">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-lg-2 text-center " style="width: 80px">
-                                            @if ($materi->moduls->users->image)
-                                                <img src="{{ asset('storage/' . $materi->moduls->users->image) }}"
-                                                    class="rounded-pill" style="max-width: 100%">
-                                            @else
-                                                <img src="{{ asset('images/avatar.png') }}" class="rounded-pill"
-                                                    style="max-width: 100%">
-                                            @endif
+                                            <img src="{{ asset('images/avatar.png') }}" class="rounded-pill"
+                                                style="max-width: 100%">
                                         </div>
                                         <div class="col-lg-9 ">
-                                            <p style="font-size: 10px" class="mb-0 fw-thin">
-                                                {{ $materi->created_at->format('d-M-Y') }}</p>
-                                            <p class="fw-bold mb-0 fs-4">{{ $materi->moduls->users->name }}</p>
-                                            <p class="fw-light" style="font-size: 14px">{{ $materi->title }}</p>
+                                            <p class="fw-bold mb-0 fs-4">{{ $materi->mahasiswa_name }}</p>
+                                            <table>
+                                                <tr>
+                                                    <td >Paket </td>
+                                                    <td> : {{ $materi->paket_detail_name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total Nilai </td>
+                                                    <td> : {{ number_format((100 / $materi->total_jawaban) * $materi->score_benar, 2) }}</td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -98,14 +100,14 @@
                     @endforeach
                 </div>
             </div>
-        </div> --}}
+        </div>
 
 
     </div>
 @endsection
 
 @section('scripts')
-    {{-- <script>
+    <script>
         const ctx = document.getElementById('myChart');
 
         new Chart(ctx, {
@@ -151,5 +153,5 @@
                 },
             }
         });
-    </script> --}}
+    </script>
 @endsection

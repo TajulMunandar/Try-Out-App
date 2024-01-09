@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\QuizController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -60,3 +61,4 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
 
 Route::resource('/main', MainController::class);
 Route::resource('/paket-main', PaketController::class);
+Route::resource('/quiz', QuizController::class);
