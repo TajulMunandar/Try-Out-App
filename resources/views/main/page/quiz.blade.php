@@ -1,7 +1,7 @@
 @extends('main.component.main')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="quiz">
         <div class="quiz-page">
             {{-- Halaman Pertama --}}
             <div class="row">
@@ -9,14 +9,10 @@
                     <p class="fs-3 fw-bold mb-0">{{ $quiz->name }}</p>
                 </div>
             </div>
-            <form>
-                {{-- Konten Pertama --}}
-                <button class="btn btn-primary next-page">Next</button>
-            </form>
         </div>
 
         @foreach ($shuffledSoalDetails as $soal)
-            <div class="quiz-page" style="display: none;">
+            <div class="quiz-page">
                 {{-- Konten Soal dan Jawaban --}}
                 <div class="row">
                     <div class="col-lg-12 p-3 mt-3">
@@ -45,6 +41,7 @@
                     @endforeach
                 </div>
                 <form>
+                    <button class="btn btn-primary back-page">Back</button>
                     <button class="btn btn-primary next-page">Next</button>
                 </form>
             </div>
@@ -52,58 +49,68 @@
 
         <form id="quiz-form" action="{{ route('quiz.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-            {{-- Input jawaban --}}
-            {{-- ... Input Jawaban ... --}}
             <button type="submit" class="btn btn-success">Save</button>
         </form>
     </div>
 @endsection
 
+
 @section('script')
-document.addEventListener('DOMContentLoaded', function () {
-    let currentPage = 0;
-    const quizPages = document.querySelectorAll('.quiz-page');
-    const nextPageButtons = document.querySelectorAll('.next-page');
+    const {
+        createApp
+        } = Vue
 
-    nextPageButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            // Simpan jawaban pada halaman saat ini ke dalam formulir
-            saveCurrentPageAnswers();
-
-            // Tampilkan halaman berikutnya atau submit formulir jika ini halaman terakhir
-            if (currentPage < quizPages.length - 1) {
-                currentPage++;
+    createApp({
+        mounted() {
+            document.addEventListener("DOMContentLoaded", function () {
+                const quizPages = document.querySelectorAll('.quiz-page');
+                let currentPage = 1;
+        
+                function showPage(pageIndex) {
+                    // Sembunyikan semua halaman
+                    quizPages.forEach((page, index) => {
+                        if (index === pageIndex) {
+                            page.style.display = 'block';
+                        } else {
+                            page.style.display = 'none';
+                        }
+                    });
+                }
+        
+                // Tampilkan halaman pertama saat dokumen dimuat
                 showPage(currentPage);
-            } else {
-                document.getElementById('quiz-form').submit();
-            }
-        });
-    });
+        
+                function nextPage() {
+                    if (currentPage < quizPages.length - 1) {
+                        currentPage++;
+                        showPage(currentPage);
+                    }
+                }
 
-    function saveCurrentPageAnswers() {
-        const currentAnswers = document.querySelectorAll(
-            `.quiz-page:nth-child(${currentPage + 1}) input[type="radio"]:checked`
-        );
+                function prevPage() {
+                    if (currentPage > 0) {
+                        currentPage--;
+                        showPage(currentPage);
+                    }
+                }
+        
+                // Tambahkan event listener untuk tombol "Next"
+                document.querySelectorAll('.next-page').forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        nextPage();
+                    });
+                });
 
-        currentAnswers.forEach(answer => {
-            const name = answer.name.replace('jawaban_id', `jawaban[${currentPage}]`);
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = name;
-            hiddenInput.value = answer.value;
-            document.getElementById('quiz-form').appendChild(hiddenInput);
-        });
-    }
+                // Tambahkan event listener untuk tombol "Back"
+                document.querySelectorAll('.back-page').forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        prevPage();
+                    });
+                });
+            });
+    },
 
-    function showPage(pageIndex) {
-        quizPages.forEach((page, index) => {
-            if (index === pageIndex) {
-                page.style.display = 'block';
-            } else {
-                page.style.display = 'none';
-            }
-        });
-    }
-});
-
+    }).mount("#quiz");
 @endsection

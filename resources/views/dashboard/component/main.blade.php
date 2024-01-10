@@ -11,7 +11,7 @@
         <!-- Sidebar -->
         @include('dashboard.component.layout.sidebar')
         <!-- / Sidebar -->
-
+        
         <!-- Page content -->
         <div id="page-content">
             <div class="header @@classList">
@@ -25,13 +25,13 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Scripts -->
     @include('dashboard.component.layout.scripts')
-    @yield('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
+    @yield('scripts')
 </body>
 
 </html>

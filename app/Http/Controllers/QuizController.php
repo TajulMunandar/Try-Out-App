@@ -46,6 +46,8 @@ class QuizController extends Controller
 
         $shuffledSoalDetails = $allSoalDetails->shuffle();
 
+        // dd($shuffledSoalDetails);
+
         return view('main.page.quiz')->with(compact('quiz', 'shuffledSoalDetails'));
     }
 

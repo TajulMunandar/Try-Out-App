@@ -7,7 +7,7 @@
 <!-- Libs JS -->
 <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('libs/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-<script src="{{ asset('js/vue.global.js') }}"></script>
+<script src="{{ asset('js/vue.global.js') }}"></script> 
 
 <!-- Datatables JS -->
 <script type="text/javascript" src="{{ asset('DataTables/datatables.js') }}"></script>
