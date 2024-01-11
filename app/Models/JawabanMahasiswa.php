@@ -28,4 +28,10 @@ class JawabanMahasiswa extends Model
         return $this->belongsTo(PaketDetail::class, 'paket_detail_id', 'id');
     }
 
+    function checkIfAnswerExists($paketId, $userId)
+    {
+        return JawabanMahasiswa::where('paket_detail_id', $paketId)
+            ->where('mahasiswa_id', $userId)
+            ->exists();
+    }
 }

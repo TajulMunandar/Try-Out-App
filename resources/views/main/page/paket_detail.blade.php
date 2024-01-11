@@ -40,11 +40,17 @@
                                 </div>
                                 <div class="col text-end">
                                     <p class="m-0 fw-bold">Total Soal</p>
-                                    <p >{{ $paket->countSoals() }}</p>
+                                    <p>{{ $paket->countSoals() }}</p>
                                 </div>
-
+                                @php
+                                    $jawabanMahasiswa = new \App\Models\JawabanMahasiswa();
+                                    $now = now();
+                                    $time = $now->toDateTimeString();
+                                    $isWithinTime = $time >= $paket_main->end || $time <= $paket_main->start;
+                                @endphp
                             </div>
-                            <a class="btn btn-primary stretched-link float-end" href="{{ route('quiz.show', $paket->id) }}" >
+                            <a class="btn btn-primary stretched-link float-end" href="{{ route('quiz.show', $paket->id) }}"
+                                @if ($jawabanMahasiswa->checkIfAnswerExists($paket->id, auth()->id()) || $isWithinTime) style="pointer-events: none;" disabled @endif>
                                 Mulai
                             </a>
                         </div>
