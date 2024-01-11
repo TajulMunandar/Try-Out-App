@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paket;
 use App\Models\PaketDetail;
 use App\Models\PaketSoal;
 use App\Models\Soal;
@@ -30,7 +31,7 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -38,6 +39,10 @@ class QuizController extends Controller
      */
     public function show(PaketDetail $quiz)
     {
+        $paket = Paket::find($quiz->paket_id);
+        $start = $paket->start;
+        $end = $paket->end;
+
         $allSoalDetails = collect();
 
         foreach ($quiz->paket_soals as $paketSoal) {
@@ -48,7 +53,7 @@ class QuizController extends Controller
 
         // dd($shuffledSoalDetails);
 
-        return view('main.page.quiz')->with(compact('quiz', 'shuffledSoalDetails'));
+        return view('main.page.quiz')->with(compact('quiz', 'shuffledSoalDetails', 'start', 'end'));
     }
 
     /**
