@@ -10,14 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;700&display=swap" rel="stylesheet">
 
 {{-- aos --}}
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <!-- Select2 JS -->
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('libs/select2js/select2-bootstrap-5-theme.css') }}">
 
 <!-- JQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
 <script src="{{ asset('libs/jquery/dist/jquery-3.6.3.min.js') }}"></script>
 
 <!-- Font Awesome Icons -->
