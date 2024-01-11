@@ -10,6 +10,25 @@
             </div>
         </div>
         <div class="row p-5 h-100" data-aos="fade-up" data-aos-duration="1000">
+            {{--  ALERT  --}}
+            <div class="row mt-3">
+                <div class="col">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if (session()->has('failed'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('failed') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            {{--  ALERT  --}}
             @foreach ($pakets as $paket)
                 @if ($paket->paket_details->isNotEmpty())
                     <div class="col mb-3">

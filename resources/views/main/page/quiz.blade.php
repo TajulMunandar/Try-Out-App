@@ -19,10 +19,12 @@
 
         <form id="quiz-form" action="{{ route('quiz.store') }}" method="post" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="mahasiswa_id" value="{{ auth()->user()->mahasiswas->id }}">
+            <input type="hidden" name="paket_detail_id" value="{{ $quiz->id }}">
             @foreach ($shuffledSoalDetails as $soal)
-                <div class="quiz-page">
+                <div class="quiz-page" >
                     {{-- Konten Soal dan Jawaban --}}
-                    <div class="row">
+                    <div class="row mb-5 pb-5">
                         <div class="col-lg-12 p-3 mt-3">
                             <p class="fs-3 mb-0">{{ $loop->iteration }} . {{ $soal->name }}</p>
                         </div>
@@ -49,7 +51,7 @@
                         @endforeach
                     </div>
 
-                   <hr>
+                   <hr class="mt-5 pt-5">
                     <button class="btn btn-secondary back-page me-2">
                         <i class="fa-solid fa-chevron-left fa-sm"></i>
                         Back
@@ -58,13 +60,12 @@
                         Next
                         <i class="fa-solid fa-chevron-right fa-sm"></i>
                     </button>
-                    <button class="btn btn-success float-end" >
+                    <a class="btn btn-success float-end" @click="saveQuiz">
                         <i class="fa-solid fa-floppy-disk fa-sm"></i>
                         Save
-                    </button>
+                    </a>
                 </div>
             @endforeach
-
         </form>
     </div>
 
@@ -96,6 +97,7 @@ createApp({
 
             const quizPages = document.querySelectorAll('.quiz-page');
             let currentPage = 1;
+            const btnModal = document.querySelector('#btnModal');
 
             function showPage(pageIndex) {
                 // Sembunyikan atau tampilkan tombol next dan back sesuai dengan keadaan
@@ -178,6 +180,20 @@ createApp({
 
     },
     methods: {
+        saveQuiz() {
+            // Show a confirmation dialog
+            const userConfirmed = window.confirm('Are you sure you want to save the quiz?');
+
+            // If the user clicks "OK", proceed with the form submission
+            if (userConfirmed) {
+                // Trigger the form submission
+                document.getElementById('quiz-form').submit();
+            } else {
+                // If the user clicks "Cancel", do nothing or perform any other action
+                // For now, let's just show an alert
+                alert('Quiz not saved.');
+            }
+        },
         initCountdownTimer() {
             const countDownDate = new Date(this.end).getTime();
             const countdownElement = document.getElementById('countdown'); // Get the DOM element

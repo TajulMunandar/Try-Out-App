@@ -14,7 +14,7 @@
 
     @include('main.component.script')
 
-    <script src="{{ asset('js/vue.global.js') }}"></script> 
+    <script src="{{ asset('js/vue.global.js') }}"></script>
     <script>
         @yield('script')
     </script>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\QuizJob;
+use App\Models\JawabanMahasiswa;
 use App\Models\Paket;
 use App\Models\PaketDetail;
 use App\Models\PaketSoal;
@@ -31,7 +33,16 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $validatedData = $request->validate([
+            'jawaban_id.*' => 'required', // Assuming 'jawaban_id' is an array
+            'mahasiswa_id' => 'required',
+            'paket_detail_id' => 'required',
+        ]);
+
+
+        QuizJob::dispatch($validatedData);
+
+        return redirect('/paket-main')->with('success', 'Hore Kamu Sudah Mengerjakan Quizmu!!');;
     }
 
     /**
