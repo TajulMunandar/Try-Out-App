@@ -114,15 +114,19 @@ class DashboardSoalDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        $soal_detail = SoalDetail::whereId($id)->first();
-        $jawabans = jawaban::where('soal_detail_id', $id)->get();
-        foreach($jawabans as $jawaban){
-            if ($jawaban->jawaban_mahasiswas()->exists()) {
-                return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('failed', "Soal Detail $soal_detail->name tidak bisa dihapus karena sedang digunakan");
+        try {
+            $soal_detail = SoalDetail::whereId($id)->first();
+            $jawabans = jawaban::where('soal_detail_id', $id)->get();
+            foreach($jawabans as $jawaban){
+                if ($jawaban->jawaban_mahasiswas()->exists()) {
+                    return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('failed', "Soal Detail $soal_detail->name tidak bisa dihapus karena sedang digunakan");
+                }
+                jawaban::destroy($jawaban->id);
             }
-            jawaban::destroy($jawaban->id);
+            SoalDetail::destroy($id);
+            return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('success', 'Soal Detail berhasil diperbaharui!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('failed', "Soal Detail $soal_detail->name tidak bisa dihapus karena sedang digunakan!");
         }
-        SoalDetail::destroy($id);
-        return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('success', 'Soal Detail berhasil diperbaharui!');
     }
 }

@@ -105,9 +105,13 @@ class DashboardMahasiswaController extends Controller
      */
     public function destroy(string $id)
     {
-        $mahasiswa = Mahasiswa::whereId($id)->first();
-        Mahasiswa::destroy($id);
-        User::where('nim', $mahasiswa->nim)->delete();
-        return redirect('/dashboard/mahasiswa')->with('success', "Mahasiswa dengan NIM $mahasiswa->nim berhasil dihapus!");
+        try {
+            $mahasiswa = Mahasiswa::whereId($id)->first();
+            Mahasiswa::destroy($id);
+            User::where('nim', $mahasiswa->nim)->delete();
+            return redirect('/dashboard/mahasiswa')->with('success', "Mahasiswa dengan Nama $mahasiswa->name berhasil dihapus!");
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/dashboard/mahasiswa')->with('failed', "Mahasiswa $mahasiswa->name tidak bisa dihapus karena sedang digunakan!");
+        }
     }
 }
