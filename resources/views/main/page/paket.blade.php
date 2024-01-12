@@ -57,19 +57,19 @@
                                 </div>
                                 <div class="row ">
                                     @php
-                                        $start = \Carbon\Carbon::parse($paket->start)->format('l M Y');
-                                        $end = \Carbon\Carbon::parse($paket->end)->format('l M Y');
+                                        $start = \Carbon\Carbon::parse($paket->start)->format('l / d M Y');
+                                        $end = \Carbon\Carbon::parse($paket->end)->format('l / d M Y');
                                         $starth = \Carbon\Carbon::parse($paket->start)->format('H : i');
                                         $endh = \Carbon\Carbon::parse($paket->end)->format('H : i');
                                     @endphp
                                     <div class="col">
                                         <p class="m-0 fw-bold">Start Date</p>
-                                        <p class="m-0" style="font-size: 14px"> {{ $start }}</p>
+                                        <p class="m-0" style="font-size: 12px"> {{ $start }}</p>
                                         <p style="font-size: 14px">Time : {{ $starth }}</p>
                                     </div>
                                     <div class="col">
                                         <p class="m-0 fw-bold">End Date</p>
-                                        <p class="m-0" style="font-size: 14px">{{ $end }}</p>
+                                        <p class="m-0" style="font-size: 12px">{{ $end }}</p>
                                         <p style="font-size: 14px"> Time : {{ $endh }}</p>
                                     </div>
                                 </div>

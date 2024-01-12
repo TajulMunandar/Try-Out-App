@@ -32,11 +32,11 @@ class DashboardProdiController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255'
-        ]); 
+        ]);
 
         Prodi::create($validatedData);
 
-        return redirect('/dashboard/prodi')->with('success', 'Prodi berhasil dibuat');
+        return redirect('/dashboard/prodi')->with('success', 'Mata Kuliah berhasil dibuat');
     }
 
     /**
@@ -65,9 +65,9 @@ class DashboardProdiController extends Controller
         ];
 
         $validatedData = $request->validate($rules);
- 
+
         Prodi::where('id', $id)->update($validatedData);
-        return redirect('/dashboard/prodi')->with('success', 'Prodi berhasil diubah');
+        return redirect('/dashboard/prodi')->with('success', 'Mata Kuliah berhasil diubah');
     }
 
     /**
@@ -78,9 +78,9 @@ class DashboardProdiController extends Controller
         try{
             $prodi = Prodi::whereId($id)->first();
             Prodi::destroy($id);
-            return redirect('/dashboard/prodi')->with('success', "Prodi $prodi->name berhasil dihapus!");
+            return redirect('/dashboard/prodi')->with('success', "Mata Kuliah $prodi->name berhasil dihapus!");
         }catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/dashboard/prodi')->with('failed', "Prodi $prodi->name tidak bisa dihapus karena sedang digunakan!");
+            return redirect('/dashboard/prodi')->with('failed', "Mata Kuliah $prodi->name tidak bisa dihapus karena sedang digunakan!");
         }
     }
 }

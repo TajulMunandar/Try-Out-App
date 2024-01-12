@@ -1,6 +1,6 @@
 @extends('dashboard.component.main')
-@section('title', 'Data Prodi')
-@section('page-heading', 'Data Prodi')
+@section('title', 'Data Mata Kuliah')
+@section('page-heading', 'Data Mata Kuliah')
 
 @section('content')
 
@@ -69,7 +69,7 @@
                                 {{--  MODAL EDIT  --}}
                                 <x-form_modal>
                                     @slot('id', "editProdi$loop->iteration")
-                                    @slot('title', 'Edit Data Prodi')
+                                    @slot('title', 'Edit Data Mata Kuliah')
                                     @slot('route', route('prodi.update', $prodi->id))
                                     @slot('method') @method('put') @endslot
                                     @slot('btnPrimaryTitle', 'Perbarui')
@@ -95,7 +95,7 @@
                                 {{--  MODAL DELETE  --}}
                                 <x-form_modal>
                                     @slot('id', "hapusProdi$loop->iteration")
-                                    @slot('title', 'Hapus Data Prodi')
+                                    @slot('title', 'Hapus Data Mata Kuliah')
                                     @slot('route', route('prodi.destroy', $prodi->id))
                                     @slot('method') @method('delete') @endslot
                                     @slot('btnPrimaryClass', 'btn-outline-danger')
@@ -105,7 +105,7 @@
                                     @csrf
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="id" value="{{ $prodi->id }}">
-                                    <p class="fs-5">Apakah anda yakin akan menghapus prodi
+                                    <p class="fs-5">Apakah anda yakin akan menghapus mata kuliah
                                         <b>{{ $prodi->name }} ?</b>
                                     </p>
 
@@ -123,7 +123,7 @@
     {{--  MODAL ADD  --}}
     <x-form_modal>
         @slot('id', 'tambahProdi')
-        @slot('title', 'Tambah Data Prodi')
+        @slot('title', 'Tambah Data Mata Kuliah')
         @slot('route', route('prodi.store'))
 
         @csrf
