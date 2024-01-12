@@ -50,7 +50,7 @@
                                 @endphp
                             </div>
                             <a class="btn btn-primary stretched-link float-end" href="{{ route('quiz.show', $paket->id) }}"
-                                @if ($jawabanMahasiswa->checkIfAnswerExists($paket->id, auth()->id()) || $isWithinTime) style="pointer-events: none;" disabled @endif>
+                                @if ($jawabanMahasiswa->checkIfAnswerExists($paket->id, auth()->user()->mahasiswas->id) || $isWithinTime) style="pointer-events: none;" disabled @endif>
                                 Mulai
                             </a>
                         </div>
