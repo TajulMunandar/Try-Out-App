@@ -30,13 +30,19 @@ class DashboardProdiController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255'
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255'
+            ]);
 
-        Prodi::create($validatedData);
+            Prodi::create($validatedData);
 
-        return redirect('/dashboard/prodi')->with('success', 'Mata Kuliah berhasil dibuat');
+            return redirect('/dashboard/prodi')->with('success', 'Mata Kuliah berhasil dibuat');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/prodi')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/prodi')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -60,14 +66,20 @@ class DashboardProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $rules = [
-            'name' => 'required|max:255',
-        ];
+        try {
+            $rules = [
+                'name' => 'required|max:255',
+            ];
 
-        $validatedData = $request->validate($rules);
+            $validatedData = $request->validate($rules);
 
-        Prodi::where('id', $id)->update($validatedData);
-        return redirect('/dashboard/prodi')->with('success', 'Mata Kuliah berhasil diubah');
+            Prodi::where('id', $id)->update($validatedData);
+            return redirect('/dashboard/prodi')->with('success', 'Mata Kuliah berhasil diubah');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/prodi')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/prodi')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -75,11 +87,11 @@ class DashboardProdiController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $prodi = Prodi::whereId($id)->first();
             Prodi::destroy($id);
             return redirect('/dashboard/prodi')->with('success', "Mata Kuliah $prodi->name berhasil dihapus!");
-        }catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/dashboard/prodi')->with('failed', "Mata Kuliah $prodi->name tidak bisa dihapus karena sedang digunakan!");
         }
     }

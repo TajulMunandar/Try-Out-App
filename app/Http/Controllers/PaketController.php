@@ -42,7 +42,7 @@ class PaketController extends Controller
     public function show(Paket $paket_main)
     {
         $paketSoal = PaketSoal::all();
-        $pakets = PaketDetail::where('paket_id', $paket_main->id)->get();
+        $pakets = PaketDetail::where('paket_id', $paket_main->id)->where('prodi_id', auth()->user()->mahasiswas->prodi_id)->get();
         return view('main.page.paket_detail')->with(compact('pakets', 'paket_main', 'paketSoal'));
     }
 

@@ -34,26 +34,32 @@ class DashboardMahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedDataMahasiswa = $request->validate([ 
-            'name' => 'required|max:255',
-            'nim' => ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'],
-            'kelas' => 'required|max:255',
-            'prodi_id' => 'required'
-        ]);
-        
-        $validatedData['nim'] = $request->nim;
-        $validatedData['password'] = Hash::make($request->nim);
-        $validatedData['is_admin'] = 0;
-        $validatedData['username'] = strtolower(str_replace(' ', '', $request->name));
-
-        $user = User::create($validatedData);
-
-        $validatedDataMahasiswa['user_id'] = $user->id;
-
-        Mahasiswa::create($validatedDataMahasiswa);
- 
-
-        return redirect('/dashboard/mahasiswa')->with('success', 'Mahasiswa baru berhasil dibuat!');
+        try {
+            $validatedDataMahasiswa = $request->validate([ 
+                'name' => 'required|max:255',
+                'nim' => ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'],
+                'kelas' => 'required|max:255',
+                'prodi_id' => 'required'
+            ]);
+            
+            $validatedData['nim'] = $request->nim;
+            $validatedData['password'] = Hash::make($request->nim);
+            $validatedData['is_admin'] = 0;
+            $validatedData['username'] = strtolower(str_replace(' ', '', $request->name));
+    
+            $user = User::create($validatedData);
+    
+            $validatedDataMahasiswa['user_id'] = $user->id;
+    
+            Mahasiswa::create($validatedDataMahasiswa);
+     
+    
+            return redirect('/dashboard/mahasiswa')->with('success', 'Mahasiswa baru berhasil dibuat!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/mahasiswa')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/mahasiswa')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -77,27 +83,33 @@ class DashboardMahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        $rules = [
-            'name' => 'required|max:255', 
-            'kelas' => 'required|max:255',
-            'nim' => 'required|max:255',
-            'prodi_id' => 'required'
-        ];
-
-        $rules2 = [
-            'nim' => 'required|max:255'
-        ];
-        
-        
-        $validatedData2 = $request->validate($rules2);
-        
-        User::where('nim', $mahasiswa->nim)->update($validatedData2);
-
-        $validatedData = $request->validate($rules);
-       
-        Mahasiswa::where('id', $mahasiswa->id)->update($validatedData);
-  
-        return redirect('/dashboard/mahasiswa')->with('success', 'Mahasiswa berhasil diperbarui!');
+        try {
+            $rules = [
+                'name' => 'required|max:255', 
+                'kelas' => 'required|max:255',
+                'nim' => 'required|max:255',
+                'prodi_id' => 'required'
+            ];
+    
+            $rules2 = [
+                'nim' => 'required|max:255'
+            ];
+            
+            
+            $validatedData2 = $request->validate($rules2);
+            
+            User::where('nim', $mahasiswa->nim)->update($validatedData2);
+    
+            $validatedData = $request->validate($rules);
+           
+            Mahasiswa::where('id', $mahasiswa->id)->update($validatedData);
+      
+            return redirect('/dashboard/mahasiswa')->with('success', 'Mahasiswa berhasil diperbarui!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/mahasiswa')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/mahasiswa')->with('failed', $e->getMessage());
+        }
     }
 
     /**

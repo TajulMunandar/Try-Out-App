@@ -41,8 +41,8 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Paket::factory()->create([
             'name' => 'Paket 1',
-            'start' => now()->addDays(10),
-            'end' => now()->addDays(17),
+            'start' => now(),
+            'end' => now()->addDays(7),
         ]);
         
         \App\Models\PaketDetail::factory()->create([

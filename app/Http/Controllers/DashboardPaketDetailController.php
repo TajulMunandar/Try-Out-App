@@ -28,15 +28,21 @@ class DashboardPaketDetailController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'paket_id' => 'required',
-            'prodi_id' => 'required'
-        ]); 
-
-        PaketDetail::create($validatedData);
-
-        return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('success', 'Paket Detail berhasil dibuat');
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'paket_id' => 'required',
+                'prodi_id' => 'required'
+            ]); 
+    
+            PaketDetail::create($validatedData);
+    
+            return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('success', 'Paket Detail berhasil dibuat');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -60,15 +66,21 @@ class DashboardPaketDetailController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $rules = [
-            'name' => 'required|max:255',
-            'prodi_id' => 'required'
-        ];
-
-        $validatedData = $request->validate($rules);
- 
-        PaketDetail::where('id', $id)->update($validatedData);
-        return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('success', 'Paket berhasil diubah');
+        try {
+            $rules = [
+                'name' => 'required|max:255',
+                'prodi_id' => 'required'
+            ];
+    
+            $validatedData = $request->validate($rules);
+     
+            PaketDetail::where('id', $id)->update($validatedData);
+            return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('success', 'Paket berhasil diubah');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect("/dashboard/paket-soal/paket/{$request->paket_id}")->with('failed', $e->getMessage());
+        }
     }
 
     /**

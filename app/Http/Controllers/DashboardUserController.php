@@ -30,20 +30,26 @@ class DashboardUserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
-        $validatedData = $request->validate([ 
-            'nim' => ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'],
-            'username' => 'required',
-            'password' => 'required|max:255',
-            'is_admin' => 'required'
-        ]);
+    {
+        try {
+            $validatedData = $request->validate([
+                'nim' => ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'],
+                'username' => 'required',
+                'password' => 'required|max:255',
+                'is_admin' => 'required'
+            ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['is_admin'] = intval($validatedData['is_admin']);
+            $validatedData['password'] = Hash::make($validatedData['password']);
+            $validatedData['is_admin'] = intval($validatedData['is_admin']);
 
-        User::create($validatedData);
+            User::create($validatedData);
 
-        return redirect('/dashboard/user')->with('success', 'User baru berhasil dibuat!');
+            return redirect('/dashboard/user')->with('success', 'User baru berhasil dibuat!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/user')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/user')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -67,21 +73,27 @@ class DashboardUserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $rules = [
-            'nim' => 'required|max:255',
-            'username' => 'required'
-        ];
-        
-        if ($request->nim != $user->nim) {
-            $rules['nim'] = ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'];
-        }
-        
-        $validatedData = $request->validate($rules);
-        
-        User::where('id', $user->id)->update($validatedData);
- 
+        try {
+            $rules = [
+                'nim' => 'required|max:255',
+                'username' => 'required'
+            ];
 
-        return redirect('/dashboard/user')->with('success', 'User berhasil diperbarui!');
+            if ($request->nim != $user->nim) {
+                $rules['nim'] = ['required', 'max:16', 'regex:/^[0-9]+$/', 'unique:users'];
+            }
+
+            $validatedData = $request->validate($rules);
+
+            User::where('id', $user->id)->update($validatedData);
+
+
+            return redirect('/dashboard/user')->with('success', 'User berhasil diperbarui!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/user')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/user')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -115,5 +127,4 @@ class DashboardUserController extends Controller
 
         return redirect('/dashboard/user')->with('success', 'Password berhasil direset!');
     }
-
 }

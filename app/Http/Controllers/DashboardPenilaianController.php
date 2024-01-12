@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 class DashboardPenilaianController extends Controller
 {
     public function index(){
+        // dd(ViewScore::latest()->get());
         return view('dashboard.page.penilaian.index', [
-            'scores' => ViewScore::all()
+            'scores' => ViewScore::latest()->get()
         ]);
     }
 }

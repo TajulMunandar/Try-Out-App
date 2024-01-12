@@ -34,14 +34,20 @@ class DashboardEnrollController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'soal_id' => 'required|max:255',
-            'paket_detail_id' => 'required|max:255'
-        ]);
-
-        PaketSoal::create($validatedData);
-
-        return redirect('/dashboard/paket-soal/enrol')->with('success', 'Enroll Paket berhasil dibuat');
+        try {
+            $validatedData = $request->validate([
+                'soal_id' => 'required|max:255',
+                'paket_detail_id' => 'required|max:255'
+            ]);
+    
+            PaketSoal::create($validatedData);
+    
+            return redirect('/dashboard/paket-soal/enrol')->with('success', 'Enroll Paket berhasil dibuat');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/paket-soal/enrol')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/paket-soal/enrol')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -65,15 +71,21 @@ class DashboardEnrollController extends Controller
      */
     public function update(Request $request, PaketSoal $enrol)
     {
-        $rules = [
-            'soal_id' => 'required|max:255',
-            'paket_detail_id' => 'required|max:255'
-        ];
-
-        $validatedData = $request->validate($rules);
-
-        PaketSoal::where('id', $enrol->id)->update($validatedData);
-        return redirect('/dashboard/paket-soal/enrol')->with('success', 'Enroll Paket berhasil diubah');
+        try {
+            $rules = [
+                'soal_id' => 'required|max:255',
+                'paket_detail_id' => 'required|max:255'
+            ];
+    
+            $validatedData = $request->validate($rules);
+    
+            PaketSoal::where('id', $enrol->id)->update($validatedData);
+            return redirect('/dashboard/paket-soal/enrol')->with('success', 'Enroll Paket berhasil diubah');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/paket-soal/enrol')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/paket-soal/enrol')->with('failed', $e->getMessage());
+        }
     }
 
     /**

@@ -21,7 +21,7 @@ class DashboardSoalDetailController extends Controller
      */
     public function create(Request $request)
     {
-        return view('dashboard.page.paket-soal.soal.soal-detail.create',[
+        return view('dashboard.page.paket-soal.soal.soal-detail.create', [
             'soal_id' => $request->query->get('soal_id'),
         ]);
     }
@@ -31,34 +31,39 @@ class DashboardSoalDetailController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedDataQuiz = $request->validate([
-            'name' => 'required|max:255',
-            'soal_id' => 'required'
-        ]);
+        try {
+            $validatedDataQuiz = $request->validate([
+                'name' => 'required|max:255',
+                'soal_id' => 'required'
+            ]);
 
-        $soal_detail = SoalDetail::create($validatedDataQuiz);
-        foreach($request->answer as $key => $value) {
-            $status = false;
+            $soal_detail = SoalDetail::create($validatedDataQuiz);
+            foreach ($request->answer as $key => $value) {
+                $status = false;
 
-            if($key == $request->jawaban){
-                $status = true;
+                if ($key == $request->jawaban) {
+                    $status = true;
+                }
+
+                Jawaban::create([
+                    'name' => $value,
+                    'status' => $status,
+                    'soal_detail_id' => $soal_detail->id
+                ]);
             }
 
-            Jawaban::create([
-                'name' => $value,
-                'status' => $status,
+            jawaban::create([
+                'name' => 'Tidak Menjawab',
+                'status' => false,
                 'soal_detail_id' => $soal_detail->id
             ]);
+
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Soal Detail baru berhasil dibuat!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('failed', $e->getMessage());
         }
-
-        jawaban::create([
-            'name' => 'Tidak Menjawab',
-            'status' => false,
-            'soal_detail_id' => $soal_detail->id
-        ]);
-
-        return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Soal Detail baru berhasil dibuat!');
-
     }
 
     /**
@@ -74,10 +79,10 @@ class DashboardSoalDetailController extends Controller
      */
     public function edit(Request $request, string $id)
     {
-        return view('dashboard.page.paket-soal.soal.soal-detail.edit',[
+        return view('dashboard.page.paket-soal.soal.soal-detail.edit', [
             'soal_id' => $request->query->get('soal_id'),
             'soal_detail' => SoalDetail::where('id', $id)->first(),
-            'jawabans' => jawaban::where('soal_detail_id',$id)->get()
+            'jawabans' => jawaban::where('soal_detail_id', $id)->get()
         ]);
     }
 
@@ -86,27 +91,32 @@ class DashboardSoalDetailController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedDataQuiz = $request->validate([
-            'name' => 'required|max:255',
-            'soal_id' => 'required'
-        ]);
-
-        // dd($request, $id);
-        foreach($request->answer as $key => $value) {
-            $status = false;
-
-            if($key == $request->jawaban){
-                $status = true;
-            }
-
-            jawaban::where('soal_detail_id', $id)->where('id', $request->idQuestion[$key])->update([
-                'name' => $value,
-                'status' => $status,
+        try {
+            $validatedDataQuiz = $request->validate([
+                'name' => 'required|max:255',
+                'soal_id' => 'required'
             ]);
-        }
-        SoalDetail::where('id', $id)->update($validatedDataQuiz);
 
-        return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Soal Detail berhasil diperbaharui!');
+            foreach ($request->answer as $key => $value) {
+                $status = false;
+
+                if ($key == $request->jawaban) {
+                    $status = true;
+                }
+
+                jawaban::where('soal_detail_id', $id)->where('id', $request->idQuestion[$key])->update([
+                    'name' => $value,
+                    'status' => $status,
+                ]);
+            }
+            SoalDetail::where('id', $id)->update($validatedDataQuiz);
+
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Soal Detail berhasil diperbaharui!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -117,7 +127,7 @@ class DashboardSoalDetailController extends Controller
         try {
             $soal_detail = SoalDetail::whereId($id)->first();
             $jawabans = jawaban::where('soal_detail_id', $id)->get();
-            foreach($jawabans as $jawaban){
+            foreach ($jawabans as $jawaban) {
                 if ($jawaban->jawaban_mahasiswas()->exists()) {
                     return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('failed', "Soal Detail $soal_detail->name tidak bisa dihapus karena sedang digunakan");
                 }

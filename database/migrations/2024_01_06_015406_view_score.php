@@ -20,8 +20,8 @@ return new class extends Migration
                 pd.name AS paket_detail_name,
                 COUNT(*) AS total_jawaban,
                 SUM(CAST(j.status AS SIGNED)) AS score_benar,
-                NOW() AS created_at,
-                NOW() AS updated_at
+                MAX(jm.created_at) AS created_at,
+                MAX(jm.updated_at) AS updated_at
             FROM
                 jawaban_mahasiswas jm
             JOIN

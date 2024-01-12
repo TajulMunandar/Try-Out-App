@@ -31,13 +31,19 @@ class DashboardSoalController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255'
-        ]); 
-
-        Soal::create($validatedData);
-
-        return redirect('/dashboard/paket-soal/soal')->with('success', 'Soal berhasil dibuat');
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255'
+            ]); 
+    
+            Soal::create($validatedData);
+    
+            return redirect('/dashboard/paket-soal/soal')->with('success', 'Soal berhasil dibuat');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/paket-soal/soal')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/paket-soal/soal')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -64,14 +70,20 @@ class DashboardSoalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $rules = [
-            'name' => 'required|max:255',
-        ];
-
-        $validatedData = $request->validate($rules);
- 
-        Soal::where('id', $id)->update($validatedData);
-        return redirect('/dashboard/paket-soal/soal')->with('success', 'Soal berhasil diubah');
+        try {
+            $rules = [
+                'name' => 'required|max:255',
+            ];
+    
+            $validatedData = $request->validate($rules);
+     
+            Soal::where('id', $id)->update($validatedData);
+            return redirect('/dashboard/paket-soal/soal')->with('success', 'Soal berhasil diubah');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/paket-soal/soal')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/paket-soal/soal')->with('failed', $e->getMessage());
+        }
     }
 
     /**

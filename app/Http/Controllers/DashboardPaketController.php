@@ -24,7 +24,6 @@ class DashboardPaketController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -32,15 +31,21 @@ class DashboardPaketController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'start' => 'required',
-            'end' => 'required'
-        ]); 
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'start' => 'required',
+                'end' => 'required'
+            ]);
 
-        Paket::create($validatedData);
+            Paket::create($validatedData);
 
-        return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil dibuat');
+            return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil dibuat');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/paket-soal/paket')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/paket-soal/paket')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -68,16 +73,22 @@ class DashboardPaketController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $rules = [
-            'name' => 'required|max:255',
-            'start' => 'required',
-            'end' => 'required'
-        ];
+        try {
+            $rules = [
+                'name' => 'required|max:255',
+                'start' => 'required',
+                'end' => 'required'
+            ];
 
-        $validatedData = $request->validate($rules);
- 
-        Paket::where('id', $id)->update($validatedData);
-        return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil diubah');
+            $validatedData = $request->validate($rules);
+
+            Paket::where('id', $id)->update($validatedData);
+            return redirect('/dashboard/paket-soal/paket')->with('success', 'Paket berhasil diubah');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect('/dashboard/paket-soal/paket')->with('failed', $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect('/dashboard/paket-soal/paket')->with('failed', $e->getMessage());
+        }
     }
 
     /**
@@ -85,11 +96,11 @@ class DashboardPaketController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $paket = Paket::whereId($id)->first();
             Paket::destroy($id);
             return redirect('/dashboard/paket-soal/paket')->with('success', "Paket $paket->name berhasil dihapus!");
-        }catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/dashboard/paket-soal/paket')->with('failed', "Paket $paket->name tidak bisa dihapus karena sedang digunakan!");
         }
     }
