@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/login');
 });
 
 Route::controller(LoginController::class)->group(function () {
@@ -39,7 +39,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout');
 });
 
-Route::prefix('/dashboard')->middleware('auth')->group(function () {
+Route::prefix('/dashboard')->middleware('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/user', DashboardUserController::class);
     Route::post('/user/reset-password', [DashboardUserController::class, 'resetPasswordAdmin'])->name('user.reset');
@@ -59,6 +59,6 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::get('/penilaian', [DashboardPenilaianController::class, 'index'])->name('penilaian.index');
 });
 
-Route::resource('/main', MainController::class);
-Route::resource('/paket-main', PaketController::class);
-Route::resource('/quiz', QuizController::class);
+Route::resource('/main', MainController::class)->middleware('auth');
+Route::resource('/paket-main', PaketController::class)->middleware('auth');
+Route::resource('/quiz', QuizController::class)->middleware('auth');
