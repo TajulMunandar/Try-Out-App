@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'nim' => '2020573010006',
             'name' => 'Alvin Syahri',
             'kelas' => '4B',
-            'user_id' => 1,
+            'user_id' => 2,
             'prodi_id' => 1,
         ]);
 

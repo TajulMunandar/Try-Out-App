@@ -80,9 +80,19 @@ class DashboardMahasiswaController extends Controller
         $rules = [
             'name' => 'required|max:255', 
             'kelas' => 'required|max:255',
+            'nim' => 'required|max:255',
             'prodi_id' => 'required'
         ];
+
+        $rules2 = [
+            'nim' => 'required|max:255'
+        ];
         
+        
+        $validatedData2 = $request->validate($rules2);
+        
+        User::where('nim', $mahasiswa->nim)->update($validatedData2);
+
         $validatedData = $request->validate($rules);
        
         Mahasiswa::where('id', $mahasiswa->id)->update($validatedData);

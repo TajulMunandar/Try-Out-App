@@ -94,6 +94,17 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
+                                            <label for="nim" class="form-label">NIM</label>
+                                            <input type="text" class="form-control @error('nim') is-invalid @enderror"
+                                                name="nim" value="{{ old('nim', $mahasiswa->nim) }}" id="nim"
+                                                placeholder="123...." autofocus required>
+                                            @error('nim')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="kelas" class="form-label">Kelas</label>
                                             <input type="text" class="form-control @error('kelas') is-invalid @enderror"
                                                 name="kelas" value="{{ old('kelas', $mahasiswa->kelas) }}" id="kelas"
