@@ -183,28 +183,28 @@ createApp({
     methods: {
         saveQuiz() {
             // Show a confirmation dialog using SweetAlert
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'Do you want to save the quiz?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'Cancel',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Trigger the form submission
-                document.getElementById('quiz-form').submit();
-            } else {
-                // If the user clicks "Cancel", show a SweetAlert instead of alert
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Quiz not saved',
-                    text: 'You have chosen not to save the quiz.',
-                });
-            }
-        });
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to save the quiz?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Trigger the form submission
+                    document.getElementById('quiz-form').submit();
+                } else {
+                    // If the user clicks "Cancel", show a SweetAlert instead of alert
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Quiz not saved',
+                        text: 'You have chosen not to save the quiz.',
+                    });
+                }
+            });
         },
         initCountdownTimer() {
             const countDownDate = new Date(this.end).getTime();

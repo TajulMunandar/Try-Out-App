@@ -57,12 +57,12 @@ class DatabaseSeeder extends Seeder
             // Membuat 30 SoalDetail
             for ($i = 1; $i <= 60; $i++) {
                 $soalDetail = \App\Models\SoalDetail::factory()->create([
-                    'name' => 'hewan ' . $i,  // Menambahkan nomor unik ke nama
+                    'name' => 'hewan '. $namaSoal[$x - 1] . ' ' .  $i,  // Menambahkan nomor unik ke nama
                     'soal_id' => $soal->id,
                 ]);
     
                 // Membuat 4 Jawaban untuk setiap SoalDetail
-                for ($j = 1; $j <= 4; $j++) {
+                for ($j = 1; $j <= 5; $j++) {
                     \App\Models\Jawaban::factory()->create([
                         'name' => 'jawaban ' . $j,
                         'status' => $j === 1,  // Memberikan status true hanya pada jawaban pertama

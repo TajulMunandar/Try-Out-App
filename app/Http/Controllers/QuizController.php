@@ -54,13 +54,9 @@ class QuizController extends Controller
         $start = $paket->start;
         $end = $paket->end;
 
-        $allSoalDetails = collect();
-
-        foreach ($quiz->paket_soals as $paketSoal) {
-            $allSoalDetails = $allSoalDetails->merge($paketSoal->soals->soal_details);
-        }
-
-        $shuffledSoalDetails = $allSoalDetails->shuffle();
+        $shuffledSoalDetails = $quiz->paket_soals->flatMap(function ($paketSoal) {
+            return $paketSoal->soals->soal_details->shuffle();
+        })->all();
 
         // dd($shuffledSoalDetails);
 
