@@ -25,6 +25,9 @@
                 <div class="quiz-page" >
                     {{-- Konten Soal dan Jawaban --}}
                     <div class="row mb-5 pb-5">
+                        <div>
+                            <p>{{ $soal->soals->name }}</p>
+                        </div>
                         <div class="col-lg-12 p-3 mt-3">
                             <p class="fs-3 mb-0">{{ $loop->iteration }} . {{ $soal->name }}</p>
                         </div>
@@ -105,7 +108,6 @@ createApp({
             const backPageBtn = document.querySelector('.back-page');
             const saveBtn = document.querySelector('.btn-success');
 
-            console.log([pageIndex, quizPages.length]);
             // Tampilkan tombol "Next" kecuali di halaman terakhir
                 nextPageBtn.style.display = pageIndex < quizPages.length - 1 ? 'block' : 'none';
 
