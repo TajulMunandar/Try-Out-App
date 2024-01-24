@@ -52,11 +52,11 @@
                     </div>
 
                    <hr class="mt-5 pt-5">
-                    <button class="btn btn-secondary back-page me-2">
+                    <button class="btn btn-outline-dark back-page me-2">
                         <i class="fa-solid fa-chevron-left fa-sm"></i>
                         Back
                     </button>
-                    <button class="btn btn-secondary next-page me-2">
+                    <button class="btn btn-outline-dark next-page me-2">
                         Next
                         <i class="fa-solid fa-chevron-right fa-sm"></i>
                     </button>
@@ -94,17 +94,17 @@ createApp({
     },
     mounted() {
         this.initCountdownTimer();
-        
+
         const quizPages = document.querySelectorAll('.quiz-page');
         let currentPage = 1;
         const btnModal = document.querySelector('#btnModal');
-        
+
         function showPage(pageIndex) {
             // Sembunyikan atau tampilkan tombol next dan back sesuai dengan keadaan
             const nextPageBtn = document.querySelector('.next-page');
             const backPageBtn = document.querySelector('.back-page');
             const saveBtn = document.querySelector('.btn-success');
-            
+
             console.log([pageIndex, quizPages.length]);
             // Tampilkan tombol "Next" kecuali di halaman terakhir
                 nextPageBtn.style.display = pageIndex < quizPages.length - 1 ? 'block' : 'none';
