@@ -17,11 +17,11 @@
 
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ Request::is('dashboard/paket-soal*') ? 'active' : '' }}" href="#!"
-                    data-bs-toggle="collapse" data-bs-target="#navQuizz" aria-expanded="false" aria-controls="navQuizz">
+                    data-bs-toggle="collapse" data-bs-target="#paket-soal" aria-expanded="false" aria-controls="paket-soal">
                     <i class="fa-solid fa-box me-3 nav-icon"></i>
                     Paket-Soal
                 </a>
-                <div id="navQuizz" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
+                <div id="paket-soal" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
                     data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
