@@ -22,6 +22,7 @@ class Admin
         if (auth()->user()->is_admin != 1) {
             abort(403);
         }
+
         return $next($request);
     }
 }

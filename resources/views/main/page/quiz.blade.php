@@ -6,7 +6,6 @@
             <div class="row">
                 <div class="col">
                     <p class="fs-3 fw-bold mb-0">{{ strtoupper($quiz->name) }}</p>
-
                 </div>
                 <div class="col text-end">
                     <p class="fw-bold fs-4">Batas Waktu</p>
@@ -26,7 +25,7 @@
                     {{-- Konten Soal dan Jawaban --}}
                     <div class="row mb-5 pb-5">
                         <div>
-                            <p>{{ $soal->soals->name }}</p>
+                            <p class="fw-bold">Paket Soal : {{ $soal->soals->name }}</p>
                         </div>
                         <div class="col-lg-12 p-3 mt-3">
                             <p class="fs-3 mb-0">{{ $loop->iteration }} . {{ $soal->name }}</p>

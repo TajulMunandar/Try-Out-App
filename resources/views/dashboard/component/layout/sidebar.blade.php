@@ -8,93 +8,94 @@
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
 
-            
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                    <i class="fa-solid fa-chart-pie me-3 nav-icon"></i>
-                    Dashboard
-                </a>
-            </li>
+            @canany(['admin', 'dosen'])
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                        <i class="fa-solid fa-chart-pie me-3 nav-icon"></i>
+                        Dashboard
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link has-arrow {{ Request::is('dashboard/paket-soal*') ? 'active' : '' }}" href="#!"
-                    data-bs-toggle="collapse" data-bs-target="#paket-soal" aria-expanded="false" aria-controls="paket-soal">
-                    <i class="fa-solid fa-box me-3 nav-icon"></i>
-                    Paket-Soal
-                </a>
-                <div id="paket-soal" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
-                    data-bs-parent="#sideNavbar">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('dashboard/paket-soal/soal*') ? 'active' : '' }}"
-                                href="{{ route('soal.index') }}">
-                                Soal
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('dashboard/paket-soal/paket*') ? 'active' : '' }}"
-                                href="{{ route('paket.index') }}">
-                                Paket
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('dashboard/paket-soal/enrol*') ? 'active' : '' }}"
-                                href="{{ route('enrol.index') }}">
-                                Enroll Paket
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link has-arrow {{ Request::is('dashboard/paket-soal*') ? 'active' : '' }}" href="#!"
+                        data-bs-toggle="collapse" data-bs-target="#paket-soal" aria-expanded="false"
+                        aria-controls="paket-soal">
+                        <i class="fa-solid fa-box me-3 nav-icon"></i>
+                        Paket-Soal
+                    </a>
+                    <div id="paket-soal" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
+                        data-bs-parent="#sideNavbar">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('dashboard/paket-soal/soal*') ? 'active' : '' }}"
+                                    href="{{ route('soal.index') }}">
+                                    Soal
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('dashboard/paket-soal/paket*') ? 'active' : '' }}"
+                                    href="{{ route('paket.index') }}">
+                                    Paket
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('dashboard/paket-soal/enrol*') ? 'active' : '' }}"
+                                    href="{{ route('enrol.index') }}">
+                                    Enroll Paket
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/penilaian') ? 'active' : '' }}"
-                    href="{{ route('penilaian.index') }}">
-                    <i class="fa-solid fa-hundred-points me-3 nav-icon"></i>
-                    Penilaian
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/penilaian') ? 'active' : '' }}"
+                        href="{{ route('penilaian.index') }}">
+                        <i class="fa-solid fa-hundred-points me-3 nav-icon"></i>
+                        Penilaian
+                    </a>
+                </li>
+            @endcanany
 
-            <hr class="mx-3">
-    
             @can('admin')
-            <li class="nav-item ">
-                <p class="nav-link mb-0 fw-bold">DATA MASTER</p>
-            </li>
+            <hr class="mx-3">
+                <li class="nav-item ">
+                    <p class="nav-link mb-0 fw-bold">DATA MASTER</p>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/dosen') ? 'active' : '' }}"
-                    href="{{ route('dosen.index') }}">
-                    <i class="fa-solid fa-user-group me-3 nav-icon"></i>
-                    Dosen
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/mahasiswa') ? 'active' : '' }}"
-                    href="{{ route('mahasiswa.index') }}">
-                    <i class="fa-solid fa-user-group me-3 nav-icon"></i>
-                    Mahasiswa
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/dosen') ? 'active' : '' }}"
+                        href="{{ route('dosen.index') }}">
+                        <i class="fa-solid fa-user-group me-3 nav-icon"></i>
+                        Dosen
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/prodi') ? 'active' : '' }}"
-                    href="{{ route('prodi.index') }}">
-                    <i class="fa-solid fa-screen-users me-3 nav-icon"></i>
-                    Mata Kuliah
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/mahasiswa') ? 'active' : '' }}"
+                        href="{{ route('mahasiswa.index') }}">
+                        <i class="fa-solid fa-user-group me-3 nav-icon"></i>
+                        Mahasiswa
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/user') ? 'active' : '' }}"
-                    href="{{ route('user.index') }}">
-                    <i class="fa-solid fa-user me-4 nav-icon"></i>
-                    User
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/prodi') ? 'active' : '' }}"
+                        href="{{ route('prodi.index') }}">
+                        <i class="fa-solid fa-screen-users me-3 nav-icon"></i>
+                        Mata Kuliah
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/user') ? 'active' : '' }}"
+                        href="{{ route('user.index') }}">
+                        <i class="fa-solid fa-user me-4 nav-icon"></i>
+                        User
+                    </a>
+                </li>
+            @endcan
         </ul>
-        @endcan
 
         <div class="nav-item mt-auto mb-5">
             <form action="/logout" method="post" class="d-grid">

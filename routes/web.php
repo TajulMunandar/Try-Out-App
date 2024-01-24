@@ -40,25 +40,30 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout');
 });
 
-Route::prefix('/dashboard')->middleware('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/user', DashboardUserController::class);
-    Route::post('/user/reset-password', [DashboardUserController::class, 'resetPasswordAdmin'])->name('user.reset');
-    Route::resource('/prodi', DashboardProdiController::class);
-    Route::resource('/mahasiswa', DashboardMahasiswaController::class);
-    Route::resource('/dosen', DashboardDosenController::class);
-    Route::prefix('/paket-soal')->group(function () {
-        Route::resource('/paket', DashboardPaketController::class);
-        Route::prefix('/paket')->group(function () {
-            Route::resource('/paket-detail', DashboardPaketDetailController::class);
+Route::prefix('/dashboard')->group(function () {
+    Route::middleware(['dosen'])->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::prefix('/paket-soal')->group(function () {
+            Route::resource('/paket', DashboardPaketController::class);
+            Route::prefix('/paket')->group(function () {
+                Route::resource('/paket-detail', DashboardPaketDetailController::class);
+            });
+            Route::resource('/soal', DashboardSoalController::class);
+            Route::prefix('/soal')->group(function () {
+                Route::resource('/soal-detail', DashboardSoalDetailController::class);
+            });
+            Route::resource('/enrol', DashboardEnrollController::class);
         });
-        Route::resource('/soal', DashboardSoalController::class);
-        Route::prefix('/soal')->group(function () {
-            Route::resource('/soal-detail', DashboardSoalDetailController::class);
-        });
-        Route::resource('/enrol', DashboardEnrollController::class);
+        Route::get('/penilaian', [DashboardPenilaianController::class, 'index'])->name('penilaian.index');
     });
-    Route::get('/penilaian', [DashboardPenilaianController::class, 'index'])->name('penilaian.index');
+
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('/user', DashboardUserController::class);
+        Route::post('/user/reset-password', [DashboardUserController::class, 'resetPasswordAdmin'])->name('user.reset');
+        Route::resource('/prodi', DashboardProdiController::class);
+        Route::resource('/mahasiswa', DashboardMahasiswaController::class);
+        Route::resource('/dosen', DashboardDosenController::class);
+    });
 });
 
 Route::resource('/main', MainController::class)->middleware('auth');
