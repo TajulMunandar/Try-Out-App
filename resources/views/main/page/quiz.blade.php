@@ -94,18 +94,19 @@ createApp({
     },
     mounted() {
         this.initCountdownTimer();
-
-            const quizPages = document.querySelectorAll('.quiz-page');
-            let currentPage = 1;
-            const btnModal = document.querySelector('#btnModal');
-
-            function showPage(pageIndex) {
-                // Sembunyikan atau tampilkan tombol next dan back sesuai dengan keadaan
-                const nextPageBtn = document.querySelector('.next-page');
-                const backPageBtn = document.querySelector('.back-page');
-                const saveBtn = document.querySelector('.btn-success');
-
-                // Tampilkan tombol "Next" kecuali di halaman terakhir
+        
+        const quizPages = document.querySelectorAll('.quiz-page');
+        let currentPage = 1;
+        const btnModal = document.querySelector('#btnModal');
+        
+        function showPage(pageIndex) {
+            // Sembunyikan atau tampilkan tombol next dan back sesuai dengan keadaan
+            const nextPageBtn = document.querySelector('.next-page');
+            const backPageBtn = document.querySelector('.back-page');
+            const saveBtn = document.querySelector('.btn-success');
+            
+            console.log([pageIndex, quizPages.length]);
+            // Tampilkan tombol "Next" kecuali di halaman terakhir
                 nextPageBtn.style.display = pageIndex < quizPages.length - 1 ? 'block' : 'none';
 
                 // Tampilkan tombol "Back" kecuali di halaman pertama
@@ -181,18 +182,29 @@ createApp({
     },
     methods: {
         saveQuiz() {
-            // Show a confirmation dialog
-            const userConfirmed = window.confirm('Are you sure you want to save the quiz?');
-
-            // If the user clicks "OK", proceed with the form submission
-            if (userConfirmed) {
+            // Show a confirmation dialog using SweetAlert
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to save the quiz?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
                 // Trigger the form submission
                 document.getElementById('quiz-form').submit();
             } else {
-                // If the user clicks "Cancel", do nothing or perform any other action
-                // For now, let's just show an alert
-                alert('Quiz not saved.');
+                // If the user clicks "Cancel", show a SweetAlert instead of alert
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Quiz not saved',
+                    text: 'You have chosen not to save the quiz.',
+                });
             }
+        });
         },
         initCountdownTimer() {
             const countDownDate = new Date(this.end).getTime();

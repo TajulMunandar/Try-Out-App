@@ -12,8 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
         \App\Models\User::factory()->create([
             'nim' => '123123',
             'password' => 'admin',
@@ -53,6 +51,16 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Soal::factory()->create([
             'name' => 'akidah 1',
+        ]);
+
+        \App\Models\SoalDetail::factory()->create([
+            'name' => 'hewan',
+            'soal_id' => 1,
+        ]);
+
+        \App\Models\Jawaban::factory()->create([
+            'name' => 'hewan',
+            'soal_id' => 1,
         ]);
     }
 }
