@@ -17,4 +17,9 @@ class Soal extends Model
     {
         return $this->hasMany(SoalDetail::class, 'soal_id', 'id');
     }
+
+    public function paket_soal()
+    {
+        return $this->hasMany(PaketSoal::class, 'soal_id', 'id');
+    }
 }

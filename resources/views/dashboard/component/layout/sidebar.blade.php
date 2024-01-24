@@ -17,11 +17,11 @@
 
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ Request::is('dashboard/paket-soal*') ? 'active' : '' }}" href="#!"
-                    data-bs-toggle="collapse" data-bs-target="#navQuizz" aria-expanded="false" aria-controls="navQuizz">
+                    data-bs-toggle="collapse" data-bs-target="#paket-soal" aria-expanded="false" aria-controls="paket-soal">
                     <i class="fa-solid fa-box me-3 nav-icon"></i>
                     Paket-Soal
                 </a>
-                <div id="navQuizz" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
+                <div id="paket-soal" class="collapse {{ Request::is('dashboard/paket-soal*') ? 'show' : '' }}"
                     data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -63,7 +63,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('dashboard/mahasiswa') ? 'active' : '' }}"
                     href="{{ route('mahasiswa.index') }}">
-                    <i class="fa-solid fa-screen-users me-3 nav-icon"></i>
+                    <i class="fa-solid fa-user-group me-3 nav-icon"></i>
                     Mahasiswa
                 </a>
             </li>
@@ -71,8 +71,8 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('dashboard/prodi') ? 'active' : '' }}"
                     href="{{ route('prodi.index') }}">
-                    <i class="fa-solid fa-buildings me-3 nav-icon"></i>
-                    Prodi
+                    <i class="fa-solid fa-screen-users me-3 nav-icon"></i>
+                    Mata Kuliah
                 </a>
             </li>
 

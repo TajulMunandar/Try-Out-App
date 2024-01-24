@@ -78,7 +78,7 @@
                                         <div class="mb-3">
                                             <input type="hidden" name="id" value="{{ $prodi->id }}">
                                             <input type="hidden" name="oldName" value="{{ $prodi->name }}">
-                                            <label for="name" class="form-label">Nama Prodi</label>
+                                            <label for="name" class="form-label">Nama Mata Kuliah</label>
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"
                                                 name="name" value="{{ old('name', $prodi->name) }}" id="name"
                                                 placeholder="Prodi" autofocus required>
@@ -129,7 +129,7 @@
         @csrf
         <div class="row">
             <div class="mb-3">
-                <label for="name" class="form-label">Nama Prodi</label>
+                <label for="name" class="form-label">Nama Mata Kuliah</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
                     placeholder="Prodi" autofocus required>
                 @error('name')

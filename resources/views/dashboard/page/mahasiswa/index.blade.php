@@ -48,7 +48,7 @@
                                 <th>Name</th>
                                 <th>NIM</th>
                                 <th>Kelas</th>
-                                <th>Prodi</th>
+                                <th>Mata Kuliah</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -116,7 +116,7 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="prodi_id" class="form-label">Prodi</label>
+                                            <label for="prodi_id" class="form-label">Mata Kuliah</label>
                                             <select class="form-select" name="prodi_id" id="prodi_id">
                                                 @foreach ($prodis as $prodi)
                                                     @if (old('prodi_id', $mahasiswa->prodi_id) == $prodi->id)
@@ -198,7 +198,7 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="prodi_id" class="form-label">Prodi</label>
+            <label for="prodi_id" class="form-label">Mata Kuliah</label>
             <select class="form-select" name="prodi_id" id="prodi_id">
                 @foreach ($prodis as $prodi)
                     @if (old('prodi_id', $prodi->id) == $prodi->id)
