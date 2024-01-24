@@ -81,7 +81,7 @@
                                             <label for="name" class="form-label">Nama Mata Kuliah</label>
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"
                                                 name="name" value="{{ old('name', $prodi->name) }}" id="name"
-                                                placeholder="Prodi" autofocus required>
+                                                placeholder="Matakuliah" autofocus required>
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -131,7 +131,7 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Nama Mata Kuliah</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
-                    placeholder="Prodi" autofocus required>
+                    placeholder="Mata Kuliah" autofocus required>
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}

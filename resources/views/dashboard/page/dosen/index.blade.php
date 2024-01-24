@@ -1,6 +1,6 @@
 @extends('dashboard.component.main')
-@section('title', 'Data Paket Detail')
-@section('page-heading', 'Data Paket Detail')
+@section('title', 'Data Dosen')
+@section('page-heading', 'Data Dosen')
 
 @section('content')
 
@@ -27,11 +27,7 @@
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
         <div class="col">
-            <a class="btn btn-outline-secondary" href="{{ route('paket.index') }}">
-                <i class="fa-solid fa-chevron-left"></i>
-                Kembali
-            </a>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahPaketDetail">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahDosen">
                 <i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -49,24 +45,28 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Paket</th>
+                                <th>Name</th>
+                                <th>NIM</th>
+                                <th>Kelas</th>
                                 <th>Mata Kuliah</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($paket_details as $paket_detail)
+                            @foreach ($dosens as $dosen)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $paket_detail->name }}</td>
-                                    <td>{{ $paket_detail->prodis->name }}</td>
+                                    <td>{{ $dosen->name }}</td>
+                                    <td>{{ $dosen->nim }}</td>
+                                    <td>{{ $dosen->kelas }}</td>
+                                    <td>{{ $dosen->prodis->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editPaketDetail{{ $loop->iteration }}">
+                                            data-bs-target="#editDosen{{ $loop->iteration }}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </button>
                                         <button id="delete-button" class="btn btn-sm btn-danger" id="delete-button"
-                                            data-bs-toggle="modal" data-bs-target="#hapusPaketDetail{{ $loop->iteration }}">
+                                            data-bs-toggle="modal" data-bs-target="#hapusDosen{{ $loop->iteration }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
@@ -74,21 +74,42 @@
 
                                 {{--  MODAL EDIT  --}}
                                 <x-form_modal>
-                                    @slot('id', "editPaketDetail$loop->iteration")
-                                    @slot('title', 'Edit Data Paket Detail')
-                                    @slot('route', route('paket-detail.update', $paket_detail->id))
+                                    @slot('id', "editDosen$loop->iteration")
+                                    @slot('title', 'Edit Data Dosen')
+                                    @slot('route', route('dosen.update', $dosen->id))
                                     @slot('method') @method('put') @endslot
                                     @slot('btnPrimaryTitle', 'Perbarui')
                                     @csrf
 
-                                    <input type="hidden" name="paket_id" value="{{ $paket_id }}">
                                     <div class="row">
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Nama Paket Detail</label>
+                                            <label for="name" class="form-label">Nama Dosen</label>
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                name="name" value="{{ old('name', $paket_detail->name) }}" id="name"
+                                                name="name" value="{{ old('name', $dosen->name) }}" id="name"
                                                 placeholder="Anton" autofocus required>
                                             @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nim" class="form-label">NIP</label>
+                                            <input type="text" class="form-control @error('nim') is-invalid @enderror"
+                                                name="nim" value="{{ old('nim', $dosen->nim) }}" id="nim"
+                                                placeholder="123...." autofocus required>
+                                            @error('nim')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="kelas" class="form-label">Kelas</label>
+                                            <input type="text" class="form-control @error('kelas') is-invalid @enderror"
+                                                name="kelas" value="{{ old('kelas', $dosen->kelas) }}" id="kelas"
+                                                placeholder="4B" autofocus required>
+                                            @error('kelas')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -98,7 +119,7 @@
                                             <label for="prodi_id" class="form-label">Mata Kuliah</label>
                                             <select class="form-select" name="prodi_id" id="prodi_id">
                                                 @foreach ($prodis as $prodi)
-                                                    @if (old('prodi_id', $paket_detail->prodi_id) == $prodi->id)
+                                                    @if (old('prodi_id', $dosen->prodi_id) == $prodi->id)
                                                         <option value="{{ $prodi->id }}" selected>
                                                             {{ $prodi->name }}</option>
                                                     @else
@@ -114,19 +135,20 @@
 
                                 {{--  MODAL DELETE  --}}
                                 <x-form_modal>
-                                    @slot('id', "hapusPaketDetail$loop->iteration")
-                                    @slot('title', 'Hapus Data Paket Detail')
-                                    @slot('route', route('paket-detail.destroy', $paket_detail->id))
+                                    @slot('id', "hapusDosen$loop->iteration")
+                                    @slot('title', 'Hapus Data Dosen')
+                                    @slot('route', route('dosen.destroy', $dosen->id))
                                     @slot('method') @method('delete') @endslot
                                     @slot('btnPrimaryClass', 'btn-outline-danger')
                                     @slot('btnSecondaryClass', 'btn-secondary')
                                     @slot('btnPrimaryTitle', 'Hapus')
                                     @csrf
 
-                                    <input type="hidden" name="id" value="{{ $paket_detail->id }}">
-                                    <p class="fs-5">Apakah anda yakin akan menghapus paket detail
-                                        <b>{{ $paket_detail->name }} ?</b>
+                                    <input type="hidden" name="id" value="{{ $dosen->id }}">
+                                    <p class="fs-5">Apakah anda yakin akan menghapus dosen
+                                        <b>{{ $dosen->name }} ?</b>
                                     </p>
+
                                 </x-form_modal>
                                 {{--  MODAL DELETE  --}}
                             @endforeach
@@ -140,35 +162,52 @@
 
     {{--  MODAL ADD  --}}
     <x-form_modal>
-        @slot('id', 'tambahPaketDetail')
-        @slot('title', 'Tambah Data Paket Detail')
-        @slot('route', route('paket-detail.store'))
-        @csrf
+        @slot('id', 'tambahDosen')
+        @slot('title', 'Tambah Data Dosen')
+        @slot('route', route('dosen.store'))
 
-        <input type="hidden" name="paket_id" value="{{ $paket_id }}">
-        <div class="row">
-            <div class="mb-3">
-                <label for="name" class="form-label">Nama Paket</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
-                    placeholder="Anton" autofocus required>
-                @error('name')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="prodi_id" class="form-label">Mata Kuliah</label>
-                <select class="form-select" name="prodi_id" id="prodi_id">
-                    @foreach ($prodis as $prodi)
-                        @if (old('prodi_id', $prodi->id) == $prodi->id)
-                            <option value="{{ $prodi->id }}" selected>{{ $prodi->name }}</option>
-                        @else
-                            <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
+        @csrf
+        <div class="mb-3">
+            <label for="name" class="form-label">Nama Dosen</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
+                placeholder="Anton" autofocus required>
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="nim" class="form-label">NIP</label>
+            <input type="text" class="form-control @error('nim') is-invalid @enderror" name="nim" id="nim"
+                placeholder="123...." autofocus required>
+            @error('nim')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="kelas" class="form-label">Kelas</label>
+            <input type="text" class="form-control @error('kelas') is-invalid @enderror" name="kelas" id="kelas"
+                placeholder="4B" autofocus required>
+            @error('kelas')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="prodi_id" class="form-label">Mata Kuliah</label>
+            <select class="form-select" name="prodi_id" id="prodi_id">
+                @foreach ($prodis as $prodi)
+                    @if (old('prodi_id', $prodi->id) == $prodi->id)
+                        <option value="{{ $prodi->id }}" selected>{{ $prodi->name }}</option>
+                    @else
+                        <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
+                    @endif
+                @endforeach
+            </select>
         </div>
     </x-form_modal>
     {{--  MODAL ADD  --}}

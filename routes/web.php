@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardDosenController;
 use App\Http\Controllers\DashboardEnrollController;
 use App\Http\Controllers\DashboardMahasiswaController;
 use App\Http\Controllers\DashboardPaketController;
@@ -45,6 +46,7 @@ Route::prefix('/dashboard')->middleware('admin')->group(function () {
     Route::post('/user/reset-password', [DashboardUserController::class, 'resetPasswordAdmin'])->name('user.reset');
     Route::resource('/prodi', DashboardProdiController::class);
     Route::resource('/mahasiswa', DashboardMahasiswaController::class);
+    Route::resource('/dosen', DashboardDosenController::class);
     Route::prefix('/paket-soal')->group(function () {
         Route::resource('/paket', DashboardPaketController::class);
         Route::prefix('/paket')->group(function () {

@@ -8,6 +8,7 @@
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
 
+            
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                     <i class="fa-solid fa-chart-pie me-3 nav-icon"></i>
@@ -55,11 +56,20 @@
             </li>
 
             <hr class="mx-3">
-
+    
+            @can('admin')
             <li class="nav-item ">
                 <p class="nav-link mb-0 fw-bold">DATA MASTER</p>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('dashboard/dosen') ? 'active' : '' }}"
+                    href="{{ route('dosen.index') }}">
+                    <i class="fa-solid fa-user-group me-3 nav-icon"></i>
+                    Dosen
+                </a>
+            </li>
+            
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('dashboard/mahasiswa') ? 'active' : '' }}"
                     href="{{ route('mahasiswa.index') }}">
@@ -84,7 +94,7 @@
                 </a>
             </li>
         </ul>
-
+        @endcan
 
         <div class="nav-item mt-auto mb-5">
             <form action="/logout" method="post" class="d-grid">

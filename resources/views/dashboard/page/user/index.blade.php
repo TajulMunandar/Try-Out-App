@@ -62,6 +62,8 @@
                                             Mahasiswa
                                         @elseif ($user->is_admin == 1)
                                             Admin
+                                        @elseif ($user->is_admin == 2)
+                                            Dosen
                                         @endif
                                     </td>
                                     <td>
