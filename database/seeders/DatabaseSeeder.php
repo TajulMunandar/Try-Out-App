@@ -49,18 +49,28 @@ class DatabaseSeeder extends Seeder
             'prodi_id' => 1,
         ]);
 
-        \App\Models\Soal::factory()->create([
-            'name' => 'akidah 1',
-        ]);
+        $namaSoal = ['akidah 1', 'fiqih 1', 'ski 1', 'professional 1'];
+        for ($x = 1 ; $x <= count($namaSoal) ; $x++){
+            $soal = \App\Models\Soal::factory()->create([
+                'name' => $namaSoal[$x - 1],
+            ]);
+            // Membuat 30 SoalDetail
+            for ($i = 1; $i <= 60; $i++) {
+                $soalDetail = \App\Models\SoalDetail::factory()->create([
+                    'name' => 'hewan ' . $i,  // Menambahkan nomor unik ke nama
+                    'soal_id' => $soal->id,
+                ]);
+    
+                // Membuat 4 Jawaban untuk setiap SoalDetail
+                for ($j = 1; $j <= 4; $j++) {
+                    \App\Models\Jawaban::factory()->create([
+                        'name' => 'jawaban ' . $j,
+                        'status' => $j === 1,  // Memberikan status true hanya pada jawaban pertama
+                        'soal_detail_id' => $soalDetail->id,
+                    ]);
+                }
+            }
+        }
 
-        \App\Models\SoalDetail::factory()->create([
-            'name' => 'hewan',
-            'soal_id' => 1,
-        ]);
-
-        \App\Models\Jawaban::factory()->create([
-            'name' => 'hewan',
-            'soal_id' => 1,
-        ]);
     }
 }
