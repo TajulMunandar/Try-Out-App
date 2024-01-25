@@ -18,6 +18,7 @@ return new class extends Migration
                 jm.mahasiswa_id,
                 m.name AS mahasiswa_name,
                 pd.name AS paket_detail_name,
+                m.prodi_id AS mahasiswa_prodi_id,
                 COUNT(*) AS total_jawaban,
                 SUM(CAST(j.status AS SIGNED)) AS score_benar,
                 MAX(jm.created_at) AS created_at,
