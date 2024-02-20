@@ -70,9 +70,6 @@
             @endforeach
         </form>
     </div>
-
-
-
     </div>
 @endsection
 
@@ -91,11 +88,11 @@ createApp({
             countdown: '', // Countdown value
             currentPage: 1, // Current page of the quiz
             countdownInterval: null,
-            end: '{{ $end }}',    
+            end: '{{ $end }}',
         };
     },
     mounted() {
-        this.initCountdownTimer(); 
+        this.initCountdownTimer();
 
         let timer = '{{ $end }}';
         let waktuSelesai = new Date(timer);
@@ -112,8 +109,8 @@ createApp({
 
         const quizPages = document.querySelectorAll('.quiz-page');
         let currentPage = 1;
-        
-        const btnModal = document.querySelector('#btnModal');   
+
+        const btnModal = document.querySelector('#btnModal');
 
         function showPage(pageIndex) {
             // Sembunyikan atau tampilkan tombol next dan back sesuai dengan keadaan

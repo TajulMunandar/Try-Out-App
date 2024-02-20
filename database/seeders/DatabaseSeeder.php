@@ -22,9 +22,11 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
         ]);
 
+
         \App\Models\Prodi::factory()->create([
             'name' => 'Fiqih',
         ]);
+
 
         \App\Models\Prodi::factory()->create([
             'name' => 'Ski',
@@ -32,6 +34,14 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Prodi::factory()->create([
             'name' => 'Akidah',
+        ]);
+
+        \App\Models\Mahasiswa::factory()->create([
+            'nim' => '123123',
+            'name' => 'admin',
+            'kelas' => '4B',
+            'user_id' => 1,
+            'prodi_id' => 1,
         ]);
 
         \App\Models\User::factory()->create([
@@ -101,7 +111,7 @@ class DatabaseSeeder extends Seeder
                     'name' => 'hewan '. $namaSoal[$x - 1] . ' ' .  $i,  // Menambahkan nomor unik ke nama
                     'soal_id' => $soal->id,
                 ]);
-    
+
                 // Membuat 4 Jawaban untuk setiap SoalDetail
                 for ($j = 1; $j <= 5; $j++) {
                     \App\Models\Jawaban::factory()->create([

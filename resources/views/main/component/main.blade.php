@@ -11,7 +11,11 @@
     <div class="body-content">
         @yield('content')
     </div>
-    @include('main.component.footer')
+    @if (request()->is('quiz/*'))
+        <!-- Tidak menampilkan apa pun jika pengguna berada di halaman /quiz -->
+    @else
+        @include('main.component.footer')
+    @endif
 
     @include('main.component.script')
 
