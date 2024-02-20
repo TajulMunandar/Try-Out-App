@@ -1,7 +1,7 @@
 @extends('main.component.main')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-5 pt-5">
         <div class="row d-flex">
             <div class="col-lg-5 col-md-12">
                 <p class="hastag" data-aos="fade-right" data-aos-duration="1000">#PejuangIlmu</p>
@@ -32,22 +32,25 @@
             @foreach ($pakets as $paket)
                 @if ($paket->paket_details->isNotEmpty())
                     <div class="col mb-3">
-                        <div class="card shadow" style="width: 22rem;">
+                        <div class="card shadow icon-box" style="width: 22rem;">
                             <div class="card-body">
                                 <img src="{{ asset('images/quis.jpg') }}" class="card-img-top" alt="..."
                                     style="height: 12rem; object-fit: cover">
                                 <div class="row mt-2">
                                     <div class="col text-center">
-                                        <a class="card-title fw-bold text-black fs-4 stretched-link"
+                                        <h4>
+                                            <a class="card-title fw-bold stretched-link"
                                             href="{{ route('paket-main.show', $paket->id) }}"
                                             style="text-decoration: none">{{ strtoupper($paket->name) }}</a>
+                                        </h4>
+
                                     </div>
                                 </div>
                                 <div class="row">
                                     <p class="m-0 fw-bold ">Mata Kuliah</p>
                                     <div class="col">
                                         @foreach ($paket->paket_details as $paketd)
-                                            <p class="badge bg-primary mt-2">
+                                            <p class="badge bg-primary mt-2 mb-2">
                                                 <span>
                                                     {{ $paketd->name }}
                                                 </span>
@@ -57,20 +60,20 @@
                                 </div>
                                 <div class="row ">
                                     @php
-                                        $start = \Carbon\Carbon::parse($paket->start)->format('l / d M Y');
-                                        $end = \Carbon\Carbon::parse($paket->end)->format('l / d M Y');
+                                        $start = \Carbon\Carbon::parse($paket->start)->format(' d M Y');
+                                        $end = \Carbon\Carbon::parse($paket->end)->format(' d M Y');
                                         $starth = \Carbon\Carbon::parse($paket->start)->format('H : i');
                                         $endh = \Carbon\Carbon::parse($paket->end)->format('H : i');
                                     @endphp
                                     <div class="col">
                                         <p class="m-0 fw-bold">Start Date</p>
-                                        <p class="m-0" style="font-size: 12px"> {{ $start }}</p>
-                                        <p style="font-size: 14px">Time : {{ $starth }}</p>
+                                        <p class="m-0" > {{ $start }}</p>
+                                        <p >Time : {{ $starth }}</p>
                                     </div>
                                     <div class="col">
                                         <p class="m-0 fw-bold">End Date</p>
-                                        <p class="m-0" style="font-size: 12px">{{ $end }}</p>
-                                        <p style="font-size: 14px"> Time : {{ $endh }}</p>
+                                        <p class="m-0" >{{ $end }}</p>
+                                        <p > Time : {{ $endh }}</p>
                                     </div>
                                 </div>
                                 <p class="card-text">{{ $paket->deskripsi }}</p>
@@ -81,7 +84,7 @@
             @endforeach
         </div>
     </div>
-    @include('main.component.footer')
+    <div id="preloader"></div>
 @endsection
 
 @section('script')

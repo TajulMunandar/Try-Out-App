@@ -3,7 +3,7 @@
 @section('content')
     <div class="container" id="quiz">
         <div class="col">
-            <div class="row">
+            <div class="row mt-5">
                 <div class="col">
                     <p class="fs-3 fw-bold mb-0">{{ strtoupper($quiz->name) }}</p>
                 </div>

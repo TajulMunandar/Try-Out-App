@@ -40,10 +40,6 @@ body{
     background-color: #bbc3cb;
 }
 
-.body-content {
-  height: 80%;
-}
-
 .hastag{
     color: #176B87;
     font-size: 18px;
@@ -59,9 +55,8 @@ body{
     background-color: #001C30;
     border: solid 1px #001C30;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 12px;
     padding: 10px 24px;
-    margin-top: 10px;
     transition: 0.3s;
 }
 
@@ -73,11 +68,5 @@ body{
 
 .nav-link{
     color: #001C30 !important;
-}
-
-.footer{
-    color: #001C30;
-    font-weight: 550;
-    font-size: 16px;
 }
 

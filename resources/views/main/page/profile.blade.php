@@ -220,7 +220,6 @@
     </div>
     {{--  MODAL RESET PASSWORD  --}}
 
-    @include('main.component.footer')
 @section('script')
     const input = document.querySelector("#pwd input");
     const eye = document.querySelector("#pwd .fa-eye-slash");
