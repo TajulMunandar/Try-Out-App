@@ -25,6 +25,7 @@ class DashboardController extends Controller
         $chartLabels = [];
         $data = $this->grafis();
 
+        
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', strtotime('-1 day'));
         foreach ($data as $record) {
@@ -38,7 +39,7 @@ class DashboardController extends Controller
             }
             $chartData[] = $record->record_count;
         }
-
+        
         $mahasiswa = Mahasiswa::count();
         $prodi = Prodi::count();
         $paket = Paket::count();
