@@ -41,6 +41,11 @@ class User extends Authenticatable
          return $this->hasOne(Mahasiswa::class, 'user_id', 'id');
      }
 
+     public function dosens()
+     {
+         return $this->hasOne(Dosen::class, 'user_id', 'id');
+     }
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',

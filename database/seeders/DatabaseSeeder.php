@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Paket;
+use App\Models\PaketDetail;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +23,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Prodi::factory()->create([
-            'name' => 'Teknik Informatika',
+            'name' => 'Fiqih',
+        ]);
+
+        \App\Models\Prodi::factory()->create([
+            'name' => 'Ski',
+        ]);
+
+        \App\Models\Prodi::factory()->create([
+            'name' => 'Akidah',
         ]);
 
         \App\Models\User::factory()->create([
@@ -37,17 +49,46 @@ class DatabaseSeeder extends Seeder
             'prodi_id' => 1,
         ]);
 
-        \App\Models\Paket::factory()->create([
-            'name' => 'Paket 1',
-            'start' => now(),
-            'end' => now()->addDays(7),
+        \App\Models\User::factory()->create([
+            'nim' => '12341234',
+            'password' => '12341234',
+            'username' => 'salahuddin',
+            'is_admin' => 2,
         ]);
-        
-        \App\Models\PaketDetail::factory()->create([
-            'name' => 'akidah 1',
-            'paket_id' => 1,
+
+        \App\Models\Dosen::factory()->create([
+            'nim' => '12341234',
+            'name' => 'Salahuddin',
+            'kelas' => '4B',
+            'user_id' => 3,
             'prodi_id' => 1,
         ]);
+
+        $paketData = [
+            [
+                'name' => 'Paket 1',
+                'start' => now(),
+                'end' => now()->addDays(7),
+            ],
+            [
+                'name' => 'Paket 2',
+                'start' => now(),
+                'end' => now()->addDays(7),
+            ],
+            // Tambahkan paket lainnya jika diperlukan
+        ];
+
+        foreach ($paketData as $index => $paket) {
+            $createdPaketId = DB::table('pakets')->insertGetId($paket);
+
+            $paketDetails = [
+                ['name' => "fiqih ". ($index + 1), 'prodi_id' => 1, 'paket_id' => $createdPaketId],
+                ['name' => "ski ". ($index + 1), 'prodi_id' => 2, 'paket_id' => $createdPaketId],
+                ['name' => "akidah ". ($index + 1), 'prodi_id' => 3, 'paket_id' => $createdPaketId],
+            ];
+
+            DB::table('paket_details')->insert($paketDetails);
+        }
 
         $namaSoal = ['akidah 1', 'fiqih 1', 'ski 1', 'professional 1'];
         for ($x = 1 ; $x <= count($namaSoal) ; $x++){

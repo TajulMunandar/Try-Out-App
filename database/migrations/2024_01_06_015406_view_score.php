@@ -16,8 +16,10 @@ return new class extends Migration
             CREATE VIEW view_score AS
             SELECT
                 jm.mahasiswa_id,
+                pd.id AS paket_detail_id,
                 m.name AS mahasiswa_name,
                 pd.name AS paket_detail_name,
+                m.prodi_id AS mahasiswa_prodi_id,
                 COUNT(*) AS total_jawaban,
                 SUM(CAST(j.status AS SIGNED)) AS score_benar,
                 MAX(jm.created_at) AS created_at,
@@ -31,7 +33,7 @@ return new class extends Migration
             JOIN
                 paket_details pd ON jm.paket_detail_id = pd.id
             GROUP BY
-                jm.mahasiswa_id, m.name, pd.name
+                jm.mahasiswa_id, pd.id, m.name, pd.name
         ");
     }
 
