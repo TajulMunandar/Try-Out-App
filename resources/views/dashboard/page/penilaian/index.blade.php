@@ -4,7 +4,6 @@
 
 @section('content')
 
-@dd($paket_details)
     {{--  ALERT  --}}
     <div class="row mt-3">
         <div class="col">
@@ -90,19 +89,15 @@
 <script>
     const ctx = document.getElementById('myChart');
 
-    // Data dummy
-    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May']; // Ganti dengan label bulan yang sesuai
-    const data = [30, 22, 18, 25, 30]; // Data dummy untuk sumbu y
-
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
+            labels: {!! json_encode($sortedArray['chartLabels']) !!},
             datasets: [{
                 label: 'Traffic',
                 borderColor: "#8f44fd",
                 backgroundColor: "#8f44fd",
-                data: data,
+                data: {!! json_encode($sortedArray['chartData']) !!},
                 fill: true,
                 borderWidth: 1
             }]
