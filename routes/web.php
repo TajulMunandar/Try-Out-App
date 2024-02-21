@@ -55,6 +55,7 @@ Route::prefix('/dashboard')->group(function () {
             Route::resource('/enrol', DashboardEnrollController::class);
         });
         Route::get('/penilaian', [DashboardPenilaianController::class, 'index'])->name('penilaian.index');
+        Route::post('/penilaian', [DashboardPenilaianController::class, 'filter'])->name('penilaian.filter');
     });
 
     Route::middleware(['admin'])->group(function () {

@@ -26,6 +26,29 @@
 
     {{--  CONTENT  --}}
     <div class="row mt-3 mb-5">
+        <div class="row">
+            <form action="{{ route('penilaian.filter') }}" method="post" class="d-flex">
+                @csrf
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <select class="form-select" name="paket_detail_id" id="paket_detail_id">
+                            @foreach ($paket_details as $paket_detail)
+                                @if (old('paket_detail_id', $paket_detail_id) == $paket_detail->id)
+                                    <option value="{{ $paket_detail->id }}" selected>
+                                        {{ $paket_detail->name }}</option>
+                                @else
+                                    <option value="{{ $paket_detail->id }}">
+                                        {{ $paket_detail->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+        </div>
         <div class="col">
             <div class="card mt-3 col-sm-6 col-md-12">
                 <div class="card-body">
