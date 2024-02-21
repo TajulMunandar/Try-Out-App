@@ -4,6 +4,7 @@
 <head>
     @include('main.component.head')
     <title>SI-ETO</title>
+    @yield('style')
 </head>
 
 <body style="background-color: #DDE6ED">

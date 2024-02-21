@@ -1,6 +1,7 @@
 @extends('main.component.main')
 
 @section('content')
+<div id="preloader"></div>
     <div class="container" id="quiz">
         <div class="col">
             <div class="row mt-5">
@@ -13,6 +14,23 @@
                 </div>
             </div>
         </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="false" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+              <h5 id="offcanvasRightLabel">Soal</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="row justify-content-center">
+                    @foreach ($shuffledSoalDetails as $soal)
+                        <div class="col-lg-3 m-2 ">
+                            <a class="btn btn-outline-secondary d-block text-center fs-5 p-3 btn-navigate-soal" data-soal-number="{{ $loop->iteration }}">
+                                {{ $loop->iteration }}
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+          </div>
         <div class="quiz-page">
         </div>
 
@@ -21,37 +39,50 @@
             <input type="hidden" name="mahasiswa_id" value="{{ auth()->user()->mahasiswas->id }}">
             <input type="hidden" name="paket_detail_id" value="{{ $quiz->id }}">
             @foreach ($shuffledSoalDetails as $soal)
+
+
                 <div class="quiz-page" >
                     {{-- Konten Soal dan Jawaban --}}
-                    <div class="row mb-5 pb-5">
-                        <div>
-                            <p class="fw-bold">Paket Soal : {{ $soal->soals->name }}</p>
-                        </div>
-                        <div class="col-lg-12 p-3 mt-3">
-                            <p class="fs-3 mb-0">{{ $loop->iteration }} . {{ $soal->name }}</p>
-                        </div>
-                        @php
-                            $lastAnswerKey = $soal->jawabans->count() - 1;
-                        @endphp
-                        @foreach ($soal->jawabans as $key => $jawaban)
-                            <div class="col-lg-12 d-flex align-items-center">
-                                <div class="form-check mt-1 fs-4">
-                                    <input class="form-check-input" type="radio"
-                                        name="jawaban_id[{{ $loop->parent->iteration }}]"
-                                        id="jawabanId_{{ $loop->parent->iteration }}_{{ $loop->iteration }}"
-                                        value="{{ $jawaban->id }}" @if ($key === $lastAnswerKey) checked hidden @endif>
-                                    @php
-                                        $abjad = chr(97 + $key);
-                                    @endphp
-                                    <label class="form-check-label"
-                                        for="jawabanId_{{ $loop->parent->iteration }}_{{ $loop->iteration }}"
-                                        @if ($key === $lastAnswerKey) hidden @endif>
-                                        {{ $abjad }}. {{ $jawaban->name }}
-                                    </label>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row mb-5 pb-5">
+                                <div>
+                                    <p class="fw-bold">Paket Soal : {{ $soal->soals->name }}</p>
                                 </div>
+                                <div class="col-lg-12 p-3 mt-3">
+                                    <p class="fs-3 mb-0">{{ $loop->iteration }} . {{ $soal->name }}</p>
+                                </div>
+                                @php
+                                    $lastAnswerKey = $soal->jawabans->count() - 1;
+                                @endphp
+                                @foreach ($soal->jawabans as $key => $jawaban)
+                                    <div class="col-lg-12 d-flex align-items-center">
+                                        <div class="form-check mt-1 fs-4">
+                                            <input class="form-check-input" type="radio"
+                                                name="jawaban_id[{{ $loop->parent->iteration }}]"
+                                                id="jawabanId_{{ $loop->parent->iteration }}_{{ $loop->iteration }}"
+                                                value="{{ $jawaban->id }}" @if ($key === $lastAnswerKey) checked hidden @endif>
+                                            @php
+                                                $abjad = chr(97 + $key);
+                                            @endphp
+                                            <label class="form-check-label"
+                                                for="jawabanId_{{ $loop->parent->iteration }}_{{ $loop->iteration }}"
+                                                @if ($key === $lastAnswerKey) hidden @endif>
+                                                {{ $abjad }}. {{ $jawaban->name }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
+                        <div class="col text-end">
+                            <!-- Loop melalui shuffledSoalDetails -->
+                            <button class="btn btn-info text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                               Soal Ke {{ $loop->iteration }}
+                            </button>
+                        </div>
                     </div>
+
 
                    <hr class="mt-5 pt-5">
                     <button class="btn btn-outline-dark back-page me-2">
@@ -71,6 +102,8 @@
         </form>
     </div>
     </div>
+
+
 @endsection
 
 
@@ -106,6 +139,34 @@ createApp({
                 document.getElementById('quiz-form').submit();
             }
         }, 1000);
+
+        document.querySelectorAll('.btn-navigate-soal').forEach(button => {
+            button.addEventListener('click', () => {
+                const soalNumber = button.getAttribute('data-soal-number');
+                this.showSoal(Number(soalNumber));
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnNavigates = document.querySelectorAll('.btn-navigate-soal');
+
+
+            // Tambahkan event listener untuk setiap input jawaban
+            const jawabanInputs = document.querySelectorAll('input[type="radio"]');
+            jawabanInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Ambil nomor soal dari ID input
+                    const inputIdParts = this.id.split('_');
+                    const soalNumber = inputIdParts[1];
+
+                    // Perbarui kelas tombol navigasi terkait jika input jawaban dipilih
+                    const relatedBtn = document.querySelector('.btn-navigate-soal[data-soal-number="' + soalNumber + '"]');
+                    relatedBtn.classList.remove('btn-outline-secondary');
+                    relatedBtn.classList.add('btn-success');
+                });
+            });
+        });
+
 
         const quizPages = document.querySelectorAll('.quiz-page');
         let currentPage = 1;
@@ -193,6 +254,16 @@ createApp({
 
     },
     methods: {
+        showSoal(soalNumber) {
+            // Sembunyikan semua halaman soal kecuali yang sesuai dengan nomor soal yang diklik
+            const quizPages = document.querySelectorAll('.quiz-page');
+            quizPages.forEach((page, index) => {
+                page.style.display = index === soalNumber ? 'block' : 'none';
+            });
+
+            // Update currentPage ke nomor soal yang ditampilkan saat ini
+            this.currentPage = soalNumber;
+        },
         saveQuiz() {
             // Show a confirmation dialog using SweetAlert
             Swal.fire({
