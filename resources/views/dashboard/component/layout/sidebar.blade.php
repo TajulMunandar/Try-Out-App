@@ -49,11 +49,29 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('dashboard/penilaian') ? 'active' : '' }}"
-                        href="{{ route('penilaian.index') }}">
+                    <a class="nav-link has-arrow {{ Request::is('dashboard/penilaian*') ? 'active' : '' }}" href="#!"
+                        data-bs-toggle="collapse" data-bs-target="#penilaian" aria-expanded="false"
+                        aria-controls="penilaian">
                         <i class="fa-solid fa-hundred-points me-3 nav-icon"></i>
                         Penilaian
                     </a>
+                    <div id="penilaian" class="collapse {{ Request::is('dashboard/penilaian*') ? 'show' : '' }}"
+                        data-bs-parent="#sideNavbar">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('dashboard/penilaian/paket*') ? 'active' : '' }}"
+                                    href="{{ route('penilaian.index') }}">
+                                    Paket
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('dashboard/penilaian/all*') ? 'active' : '' }}"
+                                    href="{{ route('penilaian.show') }}">
+                                    All
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             @endcanany
 

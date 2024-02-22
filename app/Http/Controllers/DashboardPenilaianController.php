@@ -127,4 +127,18 @@ class DashboardPenilaianController extends Controller
             'paket_detail_id' => $request->paket_detail_id
         ]);
     }
+
+    public function show(){
+        $penilaian = ViewScore::latest();
+
+        if (auth()->user()->is_admin == 2) {
+            $penilaian->where('mahasiswa_prodi_id', auth()->user()->dosens->prodi_id);
+        }
+
+        $penilaian = $penilaian->get();
+
+        return view('dashboard.page.penilaian.show', [
+            'scores' => $penilaian
+        ]);
+    }
 }
