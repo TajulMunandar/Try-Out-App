@@ -185,4 +185,17 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'excel' => [
+        'exports' => [
+            'localization' => [
+                'path' => storage_path('exports'), // Lokasi penyimpanan file yang di-ekspor
+            ],
+        ],
+        'imports' => [
+            'localization' => [
+                'path' => storage_path('imports'), // Lokasi penyimpanan file yang di-impor
+            ],
+        ],
+    ],
+
 ];

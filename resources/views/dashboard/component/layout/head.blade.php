@@ -29,6 +29,7 @@
 <!-- Datatables Style -->
 <link rel="stylesheet" href="{{ asset('DataTables/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('DataTables/dataTables.bootstrap5.min.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js">
 
 <!-- Theme CSS -->
 <link rel="stylesheet" href="{{ asset('css/theme.css') }}">

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SoalImport;
 use App\Models\Jawaban;
 use App\Models\SoalDetail;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardSoalDetailController extends Controller
 {
@@ -137,6 +139,18 @@ class DashboardSoalDetailController extends Controller
             return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('success', 'Soal Detail berhasil diperbaharui!');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect("/dashboard/paket-soal/soal/{$soal_detail->soal_id}")->with('failed', "Soal Detail $soal_detail->name tidak bisa dihapus karena sedang digunakan!");
+        }
+    }
+
+    public function import(Request $request)
+    {
+        try {
+            $soal_id = $request->soal_id;
+            Excel::import(new SoalImport($soal_id), $request->file('file'), null, 'xlsx');
+
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Data berhasil diimpor!');
+        } catch (\Exception $e) {
+            return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('failed', $e->getMessage());
         }
     }
 }
