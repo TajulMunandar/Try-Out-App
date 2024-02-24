@@ -7,6 +7,8 @@ use App\Models\Jawaban;
 use App\Models\SoalDetail;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardSoalDetailController extends Controller
 {
@@ -153,5 +155,13 @@ class DashboardSoalDetailController extends Controller
         } catch (\Exception $e) {
             return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('failed', $e->getMessage());
         }
+    }
+
+    public function download(){
+        $filePath = public_path('Template/test.xlsx'); // Sesuaikan dengan lokasi file Anda
+
+        return Response::download($filePath, 'Template Soal.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
     }
 }

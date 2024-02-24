@@ -43,6 +43,10 @@
             <button class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#soal">
                 <i class="fa-regular fa-upload me-2"></i> Import Soal
             </button>
+            <a class="btn btn-info float-end mx-2" href="{{ route('soal.download') }}">
+                <i class="fa-regular fa-download me-2"></i>
+                Download Format
+            </a>
             <form action="{{ route('soal.import') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal fade" id="soal" tabindex="-1" aria-labelledby="exampleModalLabel"

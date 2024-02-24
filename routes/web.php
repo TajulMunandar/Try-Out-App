@@ -53,6 +53,7 @@ Route::prefix('/dashboard')->group(function () {
                 Route::resource('/soal-detail', DashboardSoalDetailController::class);
             });
             Route::post('/import', [DashboardSoalDetailController::class, 'import'])->name('soal.import');
+            Route::get('/download', [DashboardSoalDetailController::class, 'download'])->name('soal.download');
             Route::resource('/enrol', DashboardEnrollController::class);
         });
         Route::post('/penilaian', [DashboardPenilaianController::class, 'filter'])->name('penilaian.filter');
