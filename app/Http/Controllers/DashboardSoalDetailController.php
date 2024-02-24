@@ -146,7 +146,8 @@ class DashboardSoalDetailController extends Controller
     {
         try {
             $soal_id = $request->soal_id;
-            Excel::import(new SoalImport($soal_id), $request->file('file'), null, 'xlsx');
+            // dd($request->file);
+            Excel::import(new SoalImport($soal_id), $request->file('file'));
 
             return redirect("/dashboard/paket-soal/soal/{$request->soal_id}")->with('success', 'Data berhasil diimpor!');
         } catch (\Exception $e) {
