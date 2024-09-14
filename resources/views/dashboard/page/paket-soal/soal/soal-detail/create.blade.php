@@ -19,13 +19,14 @@
                             <input type="hidden" name="soal_id" value="{{ $soal_id }}">
                             <div class="mb-3">
                                 <label for="name" class="form-label">name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                <input type="hidden" class="form-control @error('name') is-invalid @enderror"
                                     name="name" id="name" placeholder="Question" autofocus required>
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
+                                <trix-editor input="name"></trix-editor>
                             </div>
                             <label for="answer" class="form-label">Jawaban</label>
                             <div class="mb-3 form-check px-6">

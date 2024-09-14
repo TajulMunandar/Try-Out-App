@@ -1,0 +1,7 @@
+trix-toolbar button.trix-button--icon-link,
+trix-toolbar button.trix-button--icon-heading-1,
+trix-toolbar button.trix-button--icon-code,
+trix-toolbar button.trix-button--icon-quote,
+trix-toolbar button.trix-button--icon-attach {
+    display: none;
+}

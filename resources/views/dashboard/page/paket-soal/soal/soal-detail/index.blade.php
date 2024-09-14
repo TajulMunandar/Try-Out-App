@@ -93,7 +93,7 @@
                             @foreach ($soal_details as $soal_detail)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td class="text-wrap" style="max-width: 200px;">{{ $soal_detail->name }}</td>
+                                    <td class="text-wrap" style="max-width: 200px;">{!! $soal_detail->name !!}</td>
                                     <td class="text-wrap" style="max-width: 200px;">
                                         @foreach ($soal_detail->jawabans as $key => $jawaban)
                                             @php

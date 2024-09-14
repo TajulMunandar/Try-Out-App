@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('soal_details', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->longText('name');
             $table->foreignId('soal_id')->constrained('soals')->onUpdate('cascade')->onDelete('restrict');
             $table->index('soal_id');
             $table->timestamps();

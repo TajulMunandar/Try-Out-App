@@ -19,7 +19,7 @@
                             <input type="hidden" name="soal_id" value="{{ $soal_id }}">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                <input type="hidden" class="form-control @error('name') is-invalid @enderror"
                                     name="name" id="name" value="{{ old('name', $soal_detail->name) }}"
                                     placeholder="Anton" autofocus required>
                                 @error('name')
@@ -27,6 +27,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
+                                <trix-editor input="name"></trix-editor>
                             </div>
                             @foreach ($jawabans as $index => $value)
 
