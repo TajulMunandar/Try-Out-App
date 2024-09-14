@@ -89,8 +89,8 @@
                             @foreach ($soal_details as $soal_detail)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $soal_detail->name }}</td>
-                                    <td>
+                                    <td class="text-wrap" style="max-width: 200px;">{{ $soal_detail->name }}</td>
+                                    <td class="text-wrap" style="max-width: 200px;">
                                         @foreach ($soal_detail->jawabans as $key => $jawaban)
                                             @php
                                                 $abjad = chr(97 + $key);
@@ -102,7 +102,7 @@
                                         @endif
                                     @endforeach
                                 </td>
-                                <td>
+                                <td class="text-wrap" style="max-width: 200px;">
                                     @php
                                         $correct = $soal_detail->jawabans->where('status', true)->first();
                                     @endphp

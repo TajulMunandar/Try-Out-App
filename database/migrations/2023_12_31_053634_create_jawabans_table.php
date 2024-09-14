@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jawabans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('name');
             $table->boolean('status');
             $table->foreignId('soal_detail_id')->constrained('soal_details')->onUpdate('cascade')->onDelete('restrict');
             $table->index('soal_detail_id');

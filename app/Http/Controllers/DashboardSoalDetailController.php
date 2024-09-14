@@ -35,7 +35,7 @@ class DashboardSoalDetailController extends Controller
     {
         try {
             $validatedDataQuiz = $request->validate([
-                'name' => 'required|max:255',
+                'name' => 'required',
                 'soal_id' => 'required'
             ]);
 
@@ -95,7 +95,7 @@ class DashboardSoalDetailController extends Controller
     {
         try {
             $validatedDataQuiz = $request->validate([
-                'name' => 'required|max:255',
+                'name' => 'required',
                 'soal_id' => 'required'
             ]);
 

@@ -52,7 +52,7 @@ class DashboardSoalController extends Controller
     public function show(string $id)
     {
         return view('dashboard.page.paket-soal.soal.soal-detail.index', [
-            'soal_details' => SoalDetail::with('soals')->where('soal_id', $id)->latest()->get(),
+            'soal_details' => SoalDetail::with('soals')->where('soal_id', $id)->get(),
             'soal_id' => $id
         ]);
     }
